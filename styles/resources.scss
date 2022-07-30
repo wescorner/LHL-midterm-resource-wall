@@ -1,0 +1,47 @@
+#resource-wrapper {
+  width: 60%;
+}
+
+.resource {
+  margin: 2rem;
+  padding: 1rem;
+  border: 0.1rem groorgb(121, 121, 121)ack;
+
+  header {
+
+    display:flex;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid black;
+    padding-bottom: 0.5rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+
+    a {
+      margin-left: 1rem;
+    }
+    i {
+      margin-right: 1rem;
+    }
+  }
+
+  .title-description {
+    padding: 1rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .tags {
+    padding-bottom: 1rem;
+  }
+
+  footer {
+    display:flex;
+    justify-content: space-between;
+
+    .comments {
+      align-items: center;
+    }
+  }
+}
