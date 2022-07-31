@@ -27,6 +27,7 @@
     <nav class="navbar fixed-top navbar-light bg-dark">
       <a class="text-white">Resource Wall</a>
       <div class="nav-options">
+        <!--LOGGED IN-->
         <form>
           <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
         </form>
@@ -39,6 +40,14 @@
         <form>
           <button type="button" class="btn btn-dark" id ='logout'>Logout</button>
         </form>
+
+        <!--LOGGED OUT-->
+        <form>
+          <button type="button" class="btn btn-dark" id ='register'>Register</button>
+        </form>
+        <form>
+          <button type="button" class="btn btn-dark" id ='login'>Login</button>
+        </form>
       </div>
     </nav>
   </header>
@@ -46,10 +55,12 @@
   <main>
 
     <!--SEARCH BAR-->
-    <div id='search-bar' class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
+    <form id='search-bar' action="/resources" method="GET">
+      <div class="input-group mb-3">
+        <input name="input" type="text" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </form>
 
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
@@ -92,30 +103,36 @@
         </footer>
       </div>
     </section>
+  </main>
 
+
+  <!--OVERLAY-->
+  <section class="overlay">
     <!--LOGIN -->
-    <section class="login-wrapper">
-      <form>
+    <section id="login-wrapper" class="login-wrapper">
+      <form action="/login" method="POST">
         <h2>Login</h2>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         <div id="login-register">
-          <a>Register</a>
-          <button type="button" class="btn btn-success">Login</button>
+          <button type="button" class="btn btn-dark">Register</button>
+          <button type="submit" class="btn btn-success">Login</button>
         </div>
+        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
 
     <!--REGISTER -->
     <section class="register-wrapper">
-      <form>
+      <form action="/register" method="POST">
         <h2>REGISTER</h2>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         <div id="register-login">
-          <a>Login</a>
-          <button type="button" class="btn btn-success">Register</button>
+          <button type="button" class="btn btn-dark">Login</button>
+          <button type="submit" class="btn btn-success">Register</button>
         </div>
+        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
 
@@ -129,10 +146,9 @@
         <div id="resource-button">
           <button type="button" class="btn btn-success">Add Resource</button>
         </div>
+        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
-
-  </main>
+  </section>
 </body>
-
 </html>

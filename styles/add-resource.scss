@@ -14,7 +14,7 @@
 
   //background-color: rgb(163, 208, 219);
   background-color: white;
-  visibility: hidden;
+  display:none;
 
   h2 {
     margin-top: 1rem;
@@ -37,5 +37,12 @@
     justify-content: space-evenly;
     align-items: center;
     margin-top: 1rem;
+  }
+
+  .close {
+    text-align: center;
+    text-decoration: underline;
+    margin-top:1rem;
+    padding:0;
   }
 }
