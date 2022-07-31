@@ -1,7 +1,12 @@
--- Drop and recreate Users table (Example)
-
 DROP TABLE IF EXISTS users CASCADE;
+-- ALTER SEQUENCE users_id_seq RESTART;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  resource_id REFERENCES resources(id) ON DELETE CASCADE,
+  like_id REFERENCES likes(id) ON DELETE CASCADE,
+  comment_id REFERENCES comments(id) ON DELETE CASCADE,
+  rating_id REFERENCES ratings(id) ON DELETE CASCADE
 );

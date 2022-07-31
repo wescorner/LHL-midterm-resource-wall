@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS comments CASCADE;
+-- ALTER SEQUENCE comments_id_seq RESTART;
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id REFERENCES users(id) ON DELETE CASCADE,
+  resource_id REFERENCES resources(id) ON DELETE CASCADE,
+);

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS likes CASCADE;
+-- ALTER SEQUENCE likes_id_seq RESTART;
+CREATE TABLE likes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id REFERENCES users(id) ON DELETE CASCADE,
+  resource_id REFERENCES resources(id) ON DELETE CASCADE,
+);
