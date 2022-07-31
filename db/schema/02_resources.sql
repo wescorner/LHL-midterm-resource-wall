@@ -5,8 +5,8 @@ CREATE TABLE resources (
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   url VARCHAR(255) NOT NULL,
-  user_id REFERENCES users(id) ON DELETE CASCADE,
-  like_id REFERENCES likes(id) ON DELETE CASCADE,
-  comment_id REFERENCES comments(id) ON DELETE CASCADE,
-  rating_id REFERENCES ratings(id) ON DELETE CASCADE
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  like_id INTEGER,
+  comment_id INTEGER,
+  rating_id INTEGER
 );

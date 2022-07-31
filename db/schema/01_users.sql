@@ -5,8 +5,6 @@ CREATE TABLE users (
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  resource_id REFERENCES resources(id) ON DELETE CASCADE,
-  like_id REFERENCES likes(id) ON DELETE CASCADE,
-  comment_id REFERENCES comments(id) ON DELETE CASCADE,
-  rating_id REFERENCES ratings(id) ON DELETE CASCADE
+  resource_id INTEGER,
+  like_id INTEGER
 );
