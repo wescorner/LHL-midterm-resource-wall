@@ -1,0 +1,41 @@
+.add-resource-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+  width: 340px;
+  border: 3px solid black;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -140px;
+  margin-left: -170px;
+
+  //background-color: rgb(163, 208, 219);
+  background-color: white;
+  visibility: hidden;
+
+  h2 {
+    margin-top: 1rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 0.1rem solid black;
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
+  input {
+    margin-top: 1rem;
+  }
+  textarea {
+    margin-top: 1rem;
+    height: 7rem;
+  }
+  #resource-button {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1rem;
+  }
+}

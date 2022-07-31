@@ -11,33 +11,55 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/resources.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/login.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/add-resource.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/register.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/resourceUI.js"></script>
 </head>
 
 <body>
+  <!--NAV BAR-->
   <header class="container">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <a class="text-white">Resource Wall</a>
-      <form>
-        <a class="text-white" id ='login'>Login</a>
-      </form>
+      <div class="nav-options">
+        <form>
+          <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
+        </form>
+        <form>
+          <button type="button" class="btn btn-dark" id ='my-resources'>My Resources</button>
+        </form>
+        <form>
+          <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
+        </form>
+        <form>
+          <button type="button" class="btn btn-dark" id ='logout'>Logout</button>
+        </form>
+      </div>
     </nav>
   </header>
 
   <main>
+
+    <!--SEARCH BAR-->
     <div id='search-bar' class="input-group mb-3">
       <input type="text" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
       <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
 
+    <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
       <div class="resource bg-light">
         <header>
           <a href="'https://google.ca">https://google.ca</a>
-          <i class="fa-regular fa-heart"></i>
+          <div class="likes">
+            <i class="fa-regular fa-heart"></i>
+            <!-- <i class="fa-solid fa-heart"></i> -->
+          </div>
         </header>
 
         <section class="title-description">
@@ -61,15 +83,55 @@
             <i class="fa-solid fa-angle-down"></i>
           </div>
           <div class="stars">
-            <i id="1star" class="fa-regular fa-star"></i>
-            <i id="2star" class="fa-regular fa-star"></i>
-            <i id="3star" class="fa-regular fa-star"></i>
-            <i id="4star" class="fa-regular fa-star"></i>
-            <i id="5star" class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star 1star"></i>
+            <i class="fa-regular fa-star 2star"></i>
+            <i class="fa-regular fa-star 3star"></i>
+            <i class="fa-regular fa-star 4star"></i>
+            <i class="fa-regular fa-star 5star"></i>
           </div>
         </footer>
       </div>
     </section>
+
+    <!--LOGIN -->
+    <section class="login-wrapper">
+      <form>
+        <h2>Login</h2>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <div id="login-register">
+          <a>Register</a>
+          <button type="button" class="btn btn-success">Login</button>
+        </div>
+      </form>
+    </section>
+
+    <!--REGISTER -->
+    <section class="register-wrapper">
+      <form>
+        <h2>REGISTER</h2>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+        <div id="register-login">
+          <a>Login</a>
+          <button type="button" class="btn btn-success">Register</button>
+        </div>
+      </form>
+    </section>
+
+    <!--ADD RESOURCE -->
+    <section class="add-resource-wrapper">
+      <form>
+        <h2>Add Resource</h2>
+        <input type="text" class="form-control" placeholder="url" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="title" aria-label="Password" aria-describedby="basic-addon1">
+        <textarea class="form-control" placeholder="description" aria-label="With textarea"></textarea>
+        <div id="resource-button">
+          <button type="button" class="btn btn-success">Add Resource</button>
+        </div>
+      </form>
+    </section>
+
   </main>
 </body>
 
