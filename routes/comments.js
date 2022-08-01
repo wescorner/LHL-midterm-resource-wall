@@ -38,7 +38,9 @@ module.exports = (db) => {
       });
   });
   router.post("/:id", (req, res) => {
-    //TODO: only let user post comment when logged in
+    if (!req.session.user_id) {
+      return res.send("only logged in users may create a comment");
+    }
     db.query(
       `
       INSERT INTO comments (comment, user_id, resource_id)
