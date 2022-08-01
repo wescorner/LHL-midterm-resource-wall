@@ -14,7 +14,7 @@ module.exports = (db) => {
       `
       SELECT resources.*, tag
       FROM resources
-      JOIN tags ON resources.id = resource_id
+      LEFT JOIN tags ON resources.id = resource_id
       GROUP BY resources.id, tag;
       `
     )
@@ -45,14 +45,16 @@ module.exports = (db) => {
       });
   });
   router.post("/", (req, res) => {
-    //TODO: only let user create resource when logged in
+    if (!req.session.user_id) {
+      return res.send("only logged in users may create a resource");
+    }
     db.query(
       `
       INSERT INTO resources (title, description, url, user_id)
       VALUES ($1, $2, $3, $4)
       RETURNING *;
       `,
-      [req.body.title, req.body.description, req.body.url, req.body.user_id]
+      [req.body.title, req.body.description, req.body.url, req.session.user_id]
     )
       .then((data) => {
         const resources = data.rows;
