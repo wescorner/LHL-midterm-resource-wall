@@ -21,7 +21,28 @@ module.exports = (db) => {
       .then((data) => {
         const likes = data.rows;
         console.log(likes);
-        res.send("added comment!");
+        res.send("added like!");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+  router.delete("/:id", (req, res) => {
+    db.query(
+      `
+      DELETE FROM likes
+      WHERE user_id = $1 AND resource_id = $2
+      RETURNING *;
+      `,
+      [req.session.user_id, req.params.id]
+    )
+      .then((data) => {
+        const likes = data.rows;
+        console.log(likes);
+        if (likes.length === 0) {
+          return res.send("you haven't liked this post");
+        }
+        res.send("removed like!");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
