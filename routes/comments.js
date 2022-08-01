@@ -12,7 +12,10 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     db.query(
       `
-      SELECT * FROM comments WHERE resource_id = $1;
+      SELECT comments.comment, users.name
+      FROM comments
+      JOIN users ON users.id = user_id
+      WHERE resource_id = $1;
       `,
       [req.params.id]
     )
@@ -21,11 +24,11 @@ module.exports = (db) => {
         console.log(comments);
         const templateVars = {
           comments: [],
-          user_ids: [],
+          user_names: [],
         };
         comments.forEach((i) => {
           templateVars.comments.push(i.comment);
-          templateVars.user_ids.push(i.user_id);
+          templateVars.user_names.push(i.name);
         });
         console.log(templateVars);
         res.send(templateVars);
@@ -35,6 +38,7 @@ module.exports = (db) => {
       });
   });
   router.post("/:id", (req, res) => {
+    //TODO: only let user post comment when logged in
     db.query(
       `
       INSERT INTO comments (comment, user_id, resource_id)

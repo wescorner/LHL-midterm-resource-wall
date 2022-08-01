@@ -12,22 +12,30 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(
       `
-      SELECT * FROM resources;
+      SELECT resources.*, tag
+      FROM resources
+      JOIN tags ON resources.id = resource_id
+      GROUP BY resources.id, tag;
       `
     )
       .then((data) => {
         const resources = data.rows;
+        console.log(resources);
         templateVars = {
           ids: [],
           titles: [],
           descriptions: [],
           urls: [],
+          tags: {},
         };
         resources.forEach((i) => {
           templateVars.ids.push(i.id);
           templateVars.titles.push(i.title);
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
+          templateVars.tags[i.id]
+            ? templateVars.tags[i.id].push(i.tag)
+            : (templateVars.tags[i.id] = [i.tag]);
         });
         console.log(templateVars);
         res.render("index", templateVars);
@@ -37,6 +45,7 @@ module.exports = (db) => {
       });
   });
   router.post("/", (req, res) => {
+    //TODO: only let user create resource when logged in
     db.query(
       `
       INSERT INTO resources (title, description, url, user_id)
