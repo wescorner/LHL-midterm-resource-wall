@@ -9,6 +9,22 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get("/:id", (req, res) => {
+    db.query(
+      `
+      SELECT * FROM users WHERE id = $1;
+      `,
+      [req.params.id]
+    )
+      .then((data) => {
+        const profile = data.rows[0];
+        console.log(profile);
+        res.render("profile");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
   router.post("/:id", (req, res) => {
     db.query(
       `
