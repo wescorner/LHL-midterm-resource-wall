@@ -6,6 +6,7 @@
  */
 
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
@@ -29,7 +30,7 @@ module.exports = (db) => {
         if (!user) {
           res.send("user does not exist");
         }
-        if (password === user.password) {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
           req.session.user_id = user.id;
           res.send({ user: req.session.user_id });
         } else {
