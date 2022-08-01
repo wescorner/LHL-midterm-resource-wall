@@ -32,6 +32,7 @@ $(document).ready(function() {
     closeForms();
   })
 
+  //Close All Popup Forms
   const closeForms = function () {
     $('.overlay').css('visibility', 'hidden');
     $('.login-wrapper').css('display','none');
@@ -40,4 +41,15 @@ $(document).ready(function() {
     $('.overlay').css('visibility', 'hidden');
     $('.add-resource-wrapper').css('display','none');
   }
+
+
+  //COMMENTS DROPDOWN
+  $('.comment-dropdown').click(function () {
+    $dropdown = $(this).parent().parent().siblings()
+    if ($dropdown.is(':visible')) {
+      $dropdown.slideUp('fast');
+    } else {
+      $dropdown.slideDown('fast');
+    }
+  })
 });

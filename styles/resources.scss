@@ -1,9 +1,12 @@
 #resource-wrapper {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
   width: 60%;
 }
 
 .resource {
-  margin: 2rem;
+  margin: 2rem 2rem 0 2rem;
   padding: 1rem;
   border: 0.1rem groorgb(121, 121, 121)ack;
 
@@ -53,5 +56,27 @@
     .comments {
       align-items: center;
     }
+  }
+}
+
+//COMMENT SECTION
+.comments {
+  display:flex;
+  flex-direction: column;
+  width: 90%;
+  background-color: white;
+  padding: 1rem;
+  display:none;
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  div {
+    padding-top: 1rem;
+    border-bottom: 2px solid black;
+  }
+  p {
+    padding-left: 3rem;
   }
 }
