@@ -1,0 +1,32 @@
+.profile-wrapper {
+  display:flex;
+  flex-direction: column;
+  width:100%;
+  align-items: center;
+  background-color: white;
+  div {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem;
+    width: 60%;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  #redirect {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: grey;
+    width:100%;
+
+    a {
+      margin-right: 3rem;
+      margin-left: 3rem;
+    }
+  }
+}
