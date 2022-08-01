@@ -1,0 +1,36 @@
+nav {
+  height: 100px;
+  padding: 3rem;
+  font-size: 2rem;
+
+  #login {
+    font-size: 1rem;
+  }
+
+  .nav-options {
+    display:flex;
+    flex-direction: row;
+    font-size: 1rem;
+
+    button {
+      margin: 0 1rem 0 1rem;
+    }
+
+    button:hover {
+      color: rgb(0, 212, 0);
+    }
+
+    #add-resource {
+      visibility: hidden;
+    }
+    #my-resources {
+      visibility: hidden;
+    }
+    #profile {
+      visibility: hidden;
+    }
+    #logout {
+      visibility: hidden;
+    }
+  }
+}
