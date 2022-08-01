@@ -58,8 +58,8 @@ $(document).ready(function() {
         for (const i in commentsObj.comments) {
           $dropdown.prepend(`
           <div>
-            <h3>${escape(commentsObj.comments[i])}</h3>
-            <p>${escape(commentsObj.user_ids[i])}</p>
+            <h3>${escape(commentsObj.user_ids[i])}</h3>
+            <p>${escape(commentsObj.comments[i])}</p>
           </div>
           `)
         }
