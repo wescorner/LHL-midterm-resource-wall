@@ -16,7 +16,7 @@ module.exports = (db) => {
       VALUES ($1, $2, $3)
       RETURNING *;
       `,
-      [req.body.rating, 1, req.params.id]
+      [req.body.rating, req.session.user_id, req.params.id]
     )
       .then((data) => {
         const ratings = data.rows;
