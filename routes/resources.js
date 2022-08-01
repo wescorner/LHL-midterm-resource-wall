@@ -12,10 +12,12 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(
       `
-      SELECT * FROM resources;      `
+      SELECT * FROM resources;
+      `
     )
       .then((data) => {
         const resources = data.rows;
+        console.log(resources);
         res.json(resources);
       })
       .catch((err) => {
@@ -44,7 +46,7 @@ module.exports = (db) => {
     db.query(
       `
       SELECT resources.* FROM resources
-      JOIN likes ON resources.id = resource_id
+      LEFT JOIN likes ON resources.id = resource_id
       WHERE resources.user_id = $1
       OR resources.id IN (
         SELECT resource_id FROM likes WHERE user_id = $1

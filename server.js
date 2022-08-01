@@ -42,7 +42,7 @@ const comments = require("./routes/comments");
 const likes = require("./routes/likes");
 const ratings = require("./routes/ratings");
 const tags = require("./routes/tags");
-
+const editprofile = require("./routes/editprofile");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
@@ -51,6 +51,7 @@ app.use("/api/comments", comments(db));
 app.use("/api/likes", likes(db));
 app.use("/api/ratings", ratings(db));
 app.use("/api/tags", tags(db));
+app.use("/api/editprofile", editprofile(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
