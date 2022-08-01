@@ -1,7 +1,7 @@
 /*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /users
+ * All routes for ratings are defined here
+ * Since this file is loaded in server.js into api/ratings,
+ *   these routes are mounted onto /ratings
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
@@ -9,19 +9,19 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-  router.post("/", (req, res) => {
+  router.post("/:id", (req, res) => {
     db.query(
       `
-      INSERT INTO users (name, email, password)
+      INSERT INTO ratings (rating, user_id, resource_id)
       VALUES ($1, $2, $3)
       RETURNING *;
       `,
-      [req.body.name, req.body.email, req.body.password]
+      [req.body.rating, 1, req.params.id]
     )
       .then((data) => {
-        const users = data.rows;
-        console.log(users);
-        res.send("added user!");
+        const ratings = data.rows;
+        console.log(ratings);
+        res.send(`rated ${req.body.rating} stars!`);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
