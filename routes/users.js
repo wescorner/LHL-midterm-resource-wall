@@ -6,6 +6,7 @@
  */
 
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
@@ -16,11 +17,12 @@ module.exports = (db) => {
       VALUES ($1, $2, $3)
       RETURNING *;
       `,
-      [req.body.name, req.body.email, req.body.password]
+      [req.body.name, req.body.email, bcrypt.hashSync(req.body.password, 10)]
     )
       .then((data) => {
-        const users = data.rows;
+        const users = data.rows[0];
         console.log(users);
+        req.session.user_id = users.id;
         res.send("added user!");
       })
       .catch((err) => {
