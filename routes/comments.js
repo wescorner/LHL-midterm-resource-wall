@@ -28,7 +28,7 @@ module.exports = (db) => {
           templateVars.user_ids.push(i.user_id);
         });
         console.log(templateVars);
-        res.render("index", templateVars);
+        res.send(templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

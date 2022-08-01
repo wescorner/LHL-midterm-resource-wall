@@ -53,6 +53,7 @@
   </header>
 
   <main>
+
     <!--SEARCH BAR-->
     <form id='search-bar' action="/resources" method="GET">
       <div class="input-group mb-3">
@@ -61,21 +62,22 @@
       </div>
     </form>
 
-
-    <% for(const i in titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
       <div class="resource bg-light">
         <header>
-          <a href="'<%=urls[i]%>"><%=urls[i]%></a>
+          <a href="'https://google.ca">https://google.ca</a>
           <div class="likes">
             <i class="fa-regular fa-heart"></i>
+            <!-- <i class="fa-solid fa-heart"></i> -->
           </div>
         </header>
 
         <section class="title-description">
-          <h2><%=titles[i]%></h2>
-          <p><%=descriptions%></p>
+          <h2>Google</h2>
+          <p>Words Words Words Words Words Words Words Words Words
+            Words Words Words Words Words Words Words Words Words
+            Words Words Words Words Words Words Words Words Words</p>
         </section>
 
         <section class="tags">
@@ -100,14 +102,79 @@
           </div>
         </footer>
       </div>
-      <section id=<%=ids[i]%> class="comments">
-        <div class="new-comment">
-          <textarea class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
-          <button type="submit" class="btn btn-success">Comment</button>
+      <section class="comments">
+        <div>
+          <h3>Pwsjas</h3>
+          <p>This is a comment telling you about how amazing google is,
+            and how much I use it every day.
+          </p>
+        </div>
+        <div>
+          <h3>Pwsjas</h3>
+          <p>This is a comment telling you about how awful google is,
+            and how much I hate it.
+          </p>
         </div>
       </section>
     </section>
-    <% } %>
+
+
+
+    <!--RESOURCE FRAME-->
+    <section id="resource-wrapper">
+      <div class="resource bg-light">
+        <header>
+          <a href="'https://google.ca">https://google.ca</a>
+          <div class="likes">
+            <i class="fa-regular fa-heart"></i>
+            <!-- <i class="fa-solid fa-heart"></i> -->
+          </div>
+        </header>
+
+        <section class="title-description">
+          <h2>Google</h2>
+          <p>Words Words Words Words Words Words Words Words Words
+            Words Words Words Words Words Words Words Words Words
+            Words Words Words Words Words Words Words Words Words</p>
+        </section>
+
+        <section class="tags">
+          <label>
+            <span class="badge bg-secondary">Search Engine</span>
+            <span class="badge bg-secondary">Something</span>
+            <span class="badge bg-secondary">Fancy</span>
+          </label>
+        </section>
+
+        <footer>
+          <div class='comment-dropdown'>
+            <label>Comments <span id="number-of-comments" class="badge bg-secondary">55</span></label>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+          <div class="stars">
+            <i class="fa-regular fa-star 1star"></i>
+            <i class="fa-regular fa-star 2star"></i>
+            <i class="fa-regular fa-star 3star"></i>
+            <i class="fa-regular fa-star 4star"></i>
+            <i class="fa-regular fa-star 5star"></i>
+          </div>
+        </footer>
+      </div>
+      <section class="comments">
+        <div>
+          <h3>Pwsjas</h3>
+          <p>This is a comment telling you about how amazing google is,
+            and how much I use it every day.
+          </p>
+        </div>
+        <div>
+          <h3>Pwsjas</h3>
+          <p>This is a comment telling you about how awful google is,
+            and how much I hate it.
+          </p>
+        </div>
+      </section>
+    </section>
   </main>
 
 
@@ -115,7 +182,7 @@
   <section class="overlay">
     <!--LOGIN -->
     <section id="login-wrapper" class="login-wrapper">
-      <form action="/api/login" method="POST">
+      <form action="/login" method="POST">
         <h2>Login</h2>
         <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
         <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
@@ -129,7 +196,7 @@
 
     <!--REGISTER -->
     <section class="register-wrapper">
-      <form action="/api/users" method="POST">
+      <form action="/register" method="POST">
         <h2>REGISTER</h2>
         <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
         <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">

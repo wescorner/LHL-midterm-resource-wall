@@ -9,6 +9,7 @@
   margin: 2rem 2rem 0 2rem;
   padding: 1rem;
   border: 0.1rem groorgb(121, 121, 121)ack;
+  width: 100%;
 
   header {
 
@@ -78,5 +79,11 @@
   }
   p {
     padding-left: 3rem;
+  }
+  .new-comment {
+    display:flex;
+    flex-direction: column;
+    justify-content: right;
+    border-bottom:none;
   }
 }

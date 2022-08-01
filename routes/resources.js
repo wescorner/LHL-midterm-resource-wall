@@ -18,11 +18,13 @@ module.exports = (db) => {
       .then((data) => {
         const resources = data.rows;
         templateVars = {
+          ids: [],
           titles: [],
           descriptions: [],
           urls: [],
         };
         resources.forEach((i) => {
+          templateVars.ids.push(i.id);
           templateVars.titles.push(i.title);
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
