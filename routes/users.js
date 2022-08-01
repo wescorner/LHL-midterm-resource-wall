@@ -20,8 +20,9 @@ module.exports = (db) => {
       [req.body.name, req.body.email, bcrypt.hashSync(req.body.password, 10)]
     )
       .then((data) => {
-        const users = data.rows;
+        const users = data.rows[0];
         console.log(users);
+        req.session.user_id = users.id;
         res.send("added user!");
       })
       .catch((err) => {

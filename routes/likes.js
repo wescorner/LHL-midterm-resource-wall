@@ -16,7 +16,7 @@ module.exports = (db) => {
       VALUES ($1, $2)
       RETURNING *;
       `,
-      [1, req.params.id]
+      [req.session.user_id, req.params.id]
     )
       .then((data) => {
         const likes = data.rows;
