@@ -46,7 +46,7 @@ module.exports = (db) => {
       .then((data) => {
         const comments = data.rows;
         console.log(comments);
-        res.send("added comment!");
+        res.send(comments[0]);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

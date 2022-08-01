@@ -43,35 +43,6 @@ $(document).ready(function() {
     $('.add-resource-wrapper').css('display','none');
   }
 
-
-  //COMMENTS DROPDOWN
-  $('.comment-dropdown').click(function () {
-    $dropdown = $(this).parent().parent().siblings()
-    loadComments($dropdown.attr('id'), $dropdown);
-  })
-
-
-  const loadComments = function (id, $menu) {
-    $.ajax(`http://localhost:8080/api/comments/${id}`)
-      .then(function(commentsObj) {
-
-        for (const i in commentsObj.comments) {
-          $dropdown.prepend(`
-          <div>
-            <h3>${escape(commentsObj.user_ids[i])}</h3>
-            <p>${escape(commentsObj.comments[i])}</p>
-          </div>
-          `)
-        }
-        if ($dropdown.is(':visible')) {
-          $dropdown.slideUp('fast');
-        } else {
-          $dropdown.slideDown('fast');
-        }
-
-      });
-  }
-
   //LOAD RESOURCES
   const loadResources = function () {
     $.ajax('http://localhost:8080/api/resources:id')

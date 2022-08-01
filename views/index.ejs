@@ -73,10 +73,10 @@
         </footer>
       </div>
       <section id=<%=ids[i]%> class="comments">
-        <div class="new-comment">
-          <textarea class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
-          <button type="submit" class="btn btn-success">Comment</button>
-        </div>
+        <form class="new-comment">
+          <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
+          <button type="button" class="btn btn-success new-comment-button">Comment</button>
+        </form>
       </section>
     </section>
     <% } %>
