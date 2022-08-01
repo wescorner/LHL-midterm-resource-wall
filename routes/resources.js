@@ -17,8 +17,18 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        console.log(resources);
-        res.json(resources);
+        templateVars = {
+          titles: [],
+          descriptions: [],
+          urls: [],
+        };
+        resources.forEach((i) => {
+          templateVars.titles.push(i.title);
+          templateVars.descriptions.push(i.description);
+          templateVars.urls.push(i.url);
+        });
+        console.log(templateVars);
+        res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -57,7 +67,18 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        res.json(resources);
+        templateVars = {
+          titles: [],
+          descriptions: [],
+          urls: [],
+        };
+        resources.forEach((i) => {
+          templateVars.titles.push(i.title);
+          templateVars.descriptions.push(i.description);
+          templateVars.urls.push(i.url);
+        });
+        console.log(templateVars);
+        res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

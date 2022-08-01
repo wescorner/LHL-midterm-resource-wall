@@ -18,7 +18,17 @@ module.exports = (db) => {
     )
       .then((data) => {
         const comments = data.rows;
-        res.json(comments);
+        console.log(comments);
+        const templateVars = {
+          comments: [],
+          user_ids: [],
+        };
+        comments.forEach((i) => {
+          templateVars.comments.push(i.comment);
+          templateVars.user_ids.push(i.user_id);
+        });
+        console.log(templateVars);
+        res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -36,7 +46,7 @@ module.exports = (db) => {
       .then((data) => {
         const comments = data.rows;
         console.log(comments);
-        res.send("liked!");
+        res.send("added comment!");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
