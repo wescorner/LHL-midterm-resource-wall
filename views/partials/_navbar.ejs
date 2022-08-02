@@ -1,31 +1,32 @@
-<body>
-  <!--NAV BAR-->
+<!--NAV BAR-->
   <header class="container">
     <nav class="navbar fixed-top navbar-light bg-dark">
       <a class="text-white">Resource Wall</a>
       <div class="nav-options">
-        <!--LOGGED IN-->
 
-        <form>
-          <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
-        </form>
-        <form>
-          <button type="button" class="btn btn-dark" id ='my-resources'>My Resources</button>
-        </form>
-        <form action="/api/profile/:id" method="GET">
-          <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
-        </form>
-        <form>
-          <button type="button" class="btn btn-dark" id ='logout'>Logout</button>
-        </form>
-
-        <!--LOGGED OUT-->
-        <form>
-          <button type="button" class="btn btn-dark" id ='register'>Register</button>
-        </form>
-        <form>
-          <button type="button" class="btn btn-dark" id ='login'>Login</button>
-        </form>
+        <% if (user) { %>
+          <!--LOGGED IN-->
+          <form>
+            <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
+          </form>
+          <form>
+            <button type="button" class="btn btn-dark" id ='my-resources'>My Resources</button>
+          </form>
+          <form>
+            <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
+          </form>
+          <form>
+            <button type="button" class="btn btn-dark" id="logout-button">Logout</button>
+          </form>
+        <% } else { %>
+          <!--LOGGED OUT-->
+          <form>
+            <button type="button" class="btn btn-dark" id ='register'>Register</button>
+          </form>
+          <form>
+            <button type="button" class="btn btn-dark" id ='login'>Login</button>
+          </form>
+        <% } %>
       </div>
     </nav>
   </header>

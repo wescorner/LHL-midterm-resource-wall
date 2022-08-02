@@ -52,9 +52,9 @@
 
         <section class="tags">
           <label>
-            <span class="badge bg-secondary">Search Engine</span>
-            <span class="badge bg-secondary">Something</span>
-            <span class="badge bg-secondary">Fancy</span>
+            <% for (const tag of tags[ids[i]]) { %>
+              <span class="badge bg-secondary"><%=tag%></span>
+            <% } %>
           </label>
         </section>
 
@@ -87,13 +87,13 @@
   <section class="overlay">
     <!--LOGIN -->
     <section id="login-wrapper" class="login-wrapper">
-      <form action="/api/login" method="POST">
-        <h2>Login</h2>
-        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      <form>
+        <h2 id="login-header">Login</h2>
+        <input name="email" type="text" class="form-control" placeholder="email" aria-describedby="basic-addon1">
         <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         <div id="login-register">
           <button type="button" class="btn btn-dark">Register</button>
-          <button type="submit" class="btn btn-success">Login</button>
+          <button type="button" class="btn btn-success" id="login-button">Login</button>
         </div>
         <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>

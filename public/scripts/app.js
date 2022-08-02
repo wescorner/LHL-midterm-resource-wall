@@ -1,22 +1,28 @@
-
 // Client facing scripts here
 $(document).ready(function() {
 
   //LOGIN BUTTON
-  $loginButton = $('#login');
-  $loginButton.on('click', function () {
-    closeForms();
-    $('.overlay').css('visibility', 'visible');
-    $('.login-wrapper').slideDown('slow');
-  })
+  const startLoginButton = function () {
+    $loginButton = $('#login');
+    $loginButton.on('click', function () {
+      closeForms();
+      $('.overlay').css('visibility', 'visible');
+      $('.login-wrapper').slideDown('slow');
+    })
+  }
+  startLoginButton();
 
   //REGISTER BUTTON
-  $loginButton = $('#register');
-  $loginButton.on('click', function () {
-    closeForms();
-    $('.overlay').css('visibility', 'visible');
-    $('.register-wrapper').slideDown('slow');
-  })
+  const startRegisterButton = function () {
+    $loginButton = $('#register');
+    $loginButton.on('click', function () {
+      closeForms();
+      $('.overlay').css('visibility', 'visible');
+      $('.register-wrapper').slideDown('slow');
+    })
+  }
+  startRegisterButton();
+
 
   //ADD RESOURCE BUTTON
   $loginButton = $('#add-resource');
@@ -126,4 +132,58 @@ $(document).ready(function() {
       div.appendChild(document.createTextNode(str));
       return div.innerHTML;
     };
+
+
+    //LOGOUT BUTTON
+    const startLogoutButton = function () {
+      $('#logout-button').on('click', function () {
+        console.log('test');
+        $.post('http://localhost:8080/api/logout')
+        .then(function() {
+          $navbar = $('.nav-options');
+          $navbar.children().remove();
+          $navbar.append(`
+            <form>
+              <button type="button" class="btn btn-dark" id ='register'>Register</button>
+            </form>
+            <form>
+              <button type="button" class="btn btn-dark" id ='login'>Login</button>
+            </form>
+          `);
+          startLoginButton();
+          startRegisterButton();
+        });
+      })
+    }
+    startLogoutButton();
+
+    //LOGIN BUTTON
+    $('#login-button').on('click', function () {
+      const email = $('#login-header').next().val();
+      const password = $('#login-header').next().next().val();
+      $.post('http://localhost:8080/api/login', {email: email, password: password})
+      .then(function(user) {
+        if (user) {
+          $navbar = $('.nav-options');
+          $navbar.children().remove();
+          $navbar.append(`
+            <!--LOGGED IN-->
+            <form>
+              <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
+            </form>
+            <form>
+              <button type="button" class="btn btn-dark" id ='my-resources'>My Resources</button>
+            </form>
+            <form>
+              <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
+            </form>
+            <form>
+              <button type="button" class="btn btn-dark" id="logout-button">Logout</button>
+            </form>
+          `);
+          closeForms();
+          startLogoutButton();
+        }
+      });
+    })
 });
