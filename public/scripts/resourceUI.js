@@ -29,8 +29,6 @@ $(document).ready(function() {
       $like.children('.fa-solid').remove();
     }
   });
-
-
   const likeResource = function ($resource) {
     $resource_id = $resource.parent().parent().siblings()
 
@@ -71,7 +69,7 @@ $(document).ready(function() {
           for (const i in commentsObj.comments) {
             $dropdown.prepend(`
             <div>
-              <h3>${escape(commentsObj.user_ids[i])}</h3>
+              <h3>${escape(commentsObj.user_names[i])}</h3>
               <p>${escape(commentsObj.comments[i])}</p>
             </div>
             `)
