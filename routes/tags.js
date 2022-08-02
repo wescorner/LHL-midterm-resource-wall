@@ -27,5 +27,23 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+  router.delete("/:id", (req, res) => {
+    db.query(
+      `
+      DELETE FROM tags
+      WHERE user_id = $1 AND resource_id = $2
+      RETURNING *;
+      `,
+      [req.session.user_id, req.params.id]
+    )
+      .then((data) => {
+        const tags = data.rows;
+        console.log(tags);
+        res.send("removed tag!");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
   return router;
 };
