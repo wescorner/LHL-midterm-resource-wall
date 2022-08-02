@@ -89,16 +89,23 @@ module.exports = (db) => {
       .then((data) => {
         const resources = data.rows;
         templateVars = {
+          ids: [],
           titles: [],
           descriptions: [],
           urls: [],
+          tags: {},
+          user: req.session.user_id,
         };
         resources.forEach((i) => {
+          templateVars.tags[i.id]
+            ? templateVars.tags[i.id].push(i.tag)
+            : (templateVars.tags[i.id] = [i.tag]);
+          if (templateVars.ids.includes(i.id)) return;
+          templateVars.ids.push(i.id);
           templateVars.titles.push(i.title);
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
         });
-        console.log(templateVars);
         res.render("index", templateVars);
       })
       .catch((err) => {
