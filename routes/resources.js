@@ -10,17 +10,23 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(
-      `
+    const input = req.query.input;
+    console.log(input);
+    queryParams = [];
+    queryString = `
       SELECT resources.*, tag
       FROM resources
       LEFT JOIN tags ON resources.id = resource_id
-      GROUP BY resources.id, tag;
-      `
-    )
+      GROUP BY resources.id, tag
+    `;
+    if (input) {
+      queryParams.push(`%${input}%`);
+      queryString += `HAVING tag LIKE $1`;
+    }
+    queryString += `ORDER BY resources.id;`;
+    db.query(queryString, queryParams)
       .then((data) => {
         const resources = data.rows;
-        console.log(resources);
         templateVars = {
           ids: [],
           titles: [],
@@ -30,21 +36,22 @@ module.exports = (db) => {
           user: req.session.user_id,
         };
         resources.forEach((i) => {
+          templateVars.tags[i.id]
+            ? templateVars.tags[i.id].push(i.tag)
+            : (templateVars.tags[i.id] = [i.tag]);
+          if (templateVars.ids.includes(i.id)) return;
           templateVars.ids.push(i.id);
           templateVars.titles.push(i.title);
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
-          templateVars.tags[i.id]
-            ? templateVars.tags[i.id].push(i.tag)
-            : (templateVars.tags[i.id] = [i.tag]);
         });
-        console.log(templateVars);
         res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
   router.post("/", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may create a resource");
