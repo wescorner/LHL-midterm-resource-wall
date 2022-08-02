@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/styles/login.css" type="text/css" />
   <link rel="stylesheet" href="/styles/add-resource.css" type="text/css" />
   <link rel="stylesheet" href="/styles/register.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/add-tag.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -55,12 +56,13 @@
             <% for (const tag of tags[ids[i]]) { %>
               <span class="badge bg-secondary"><%=tag%></span>
             <% } %>
+            <span class="badge bg-secondary add-tag">+</span>
           </label>
         </section>
 
         <footer>
           <div class='comment-dropdown'>
-            <label>Comments <span id="number-of-comments" class="badge bg-secondary">55</span></label>
+            <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
           <div class="stars">
@@ -118,11 +120,23 @@
     <section class="add-resource-wrapper">
       <form>
         <h2>Add Resource</h2>
-        <input type="text" class="form-control" placeholder="url" aria-label="Username" aria-describedby="basic-addon1">
-        <input type="text" class="form-control" placeholder="title" aria-label="Password" aria-describedby="basic-addon1">
-        <textarea class="form-control" placeholder="description" aria-label="With textarea"></textarea>
+        <input name="url" type="text" class="form-control" placeholder="url" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="title" type="text" class="form-control" placeholder="title" aria-label="Password" aria-describedby="basic-addon1">
+        <textarea name="description" class="form-control" placeholder="description" aria-label="With textarea"></textarea>
         <div id="resource-button">
-          <button type="button" class="btn btn-success">Add Resource</button>
+          <button type="button" class="btn btn-success" id="add-resource-button">Add Resource</button>
+        </div>
+        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
+      </form>
+    </section>
+
+    <!--ADD TAG-->
+    <section class="add-tag-wrapper">
+      <form>
+        <h2>Add Tag</h2>
+        <input name="tag" type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1">
+        <div id="tag-button">
+          <button type="button" class="btn btn-success" id="add-tag-button">Add Tag</button>
         </div>
         <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>

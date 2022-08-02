@@ -14,8 +14,8 @@ $(document).ready(function() {
 
   //REGISTER BUTTON
   const startRegisterButton = function () {
-    $loginButton = $('#register');
-    $loginButton.on('click', function () {
+    $registerButton = $('#register');
+    $registerButton.on('click', function () {
       closeForms();
       $('.overlay').css('visibility', 'visible');
       $('.register-wrapper').slideDown('slow');
@@ -25,8 +25,8 @@ $(document).ready(function() {
 
 
   //ADD RESOURCE BUTTON
-  $loginButton = $('#add-resource');
-  $loginButton.on('click', function () {
+  $resourceButton = $('#add-resource');
+  $resourceButton.on('click', function () {
     closeForms();
     $('.overlay').css('visibility', 'visible');
     $('.add-resource-wrapper').slideDown('slow');
@@ -163,7 +163,8 @@ $(document).ready(function() {
       const password = $('#login-header').next().next().val();
       $.post('http://localhost:8080/api/login', {email: email, password: password})
       .then(function(user) {
-        if (user) {
+        console.log(user);
+        if (user != 'incorrect password' && user != 'user does not exist') {
           $navbar = $('.nav-options');
           $navbar.children().remove();
           $navbar.append(`
@@ -183,7 +184,23 @@ $(document).ready(function() {
           `);
           closeForms();
           startLogoutButton();
+        } else {
+          alert('error');
         }
+      });
+    })
+
+    //ADD RESOURCE BUTTON
+    $('#add-resource-button').on('click', function () {
+      const description = $(this).parent().prev().val();
+      const title = $(this).parent().prev().prev().val();
+      const url = $(this).parent().prev().prev().prev().val();
+      console.log('test');
+
+      $.post('http://localhost:8080/api/resources', {url: url, title: title, description: description})
+      .then(function(user) {
+        console.log('created a resource');
+        closeForms();
       });
     })
 });

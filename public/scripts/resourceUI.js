@@ -10,6 +10,7 @@ $(document).ready(function() {
     click: function () {
       const $like = $(this)
       if ($like.attr('value') === 'true') {
+        unlikeResource($like);
         console.log('clicked')
         $like.find(".fa-solid").remove();
         $like.attr('value', 'false');
@@ -37,14 +38,42 @@ $(document).ready(function() {
         console.log('liked');
       });
   }
+  const unlikeResource = function ($resource) {
+    $resource_id = $resource.parent().parent().siblings()
 
+    $.ajax(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`, {type: 'DELETE'})
+      .then(function() {
+        console.log('liked');
+      });
+  }
 
+  //ADD TAG BUTTON
+  let $currentResource;
+  $('.add-tag').click(function () {
+    $currentResource = $(this).parent().parent().parent().siblings();
+    $('.overlay').css('visibility', 'visible');
+    $('.add-tag-wrapper').slideDown('slow');
+  })
+
+  //ADD TAG FORM SUBMISSION
+  $('#add-tag-button').on('click', function () {
+    const tag = $(this).parent().prev().val();
+    $.post(`http://localhost:8080/api/tags/${$currentResource.attr('id')}`, {tag: tag})
+    .then(function(user) {
+      $('.overlay').css('visibility', 'hidden');
+      $('.add-tag-wrapper').css('display','none');
+
+      $tagTarget = $currentResource.parent().find('.add-tag');
+
+      $(`<span style="margin-left:0.1rem; margin-right: 0.1rem;" class="badge bg-secondary">${tag}</span>`)
+      .insertBefore($tagTarget);
+    });
+  });
 
 
 
     //COMMENTS DROPDOWN
   $('.comment-dropdown').click(function () {
-    console.log(this);
     const $dropdown = $(this).parent().parent().siblings();
     if ($(this).children('.fa-angle-down').length) {
       loadComments($dropdown.attr('id'), $dropdown);
@@ -87,6 +116,7 @@ $(document).ready(function() {
 
     $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
     .then(function(comment) {
+      console.log(comment);
       $resource.prepend(`
         <div>
           <h3>${escape(comment.user_id)}</h3>
