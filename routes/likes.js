@@ -10,6 +10,9 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.post("/:id", (req, res) => {
+    if (!req.session.user_id) {
+      return res.send("only logged in users may like a resource");
+    }
     db.query(
       `
       INSERT INTO likes (user_id, resource_id)
@@ -28,6 +31,9 @@ module.exports = (db) => {
       });
   });
   router.delete("/:id", (req, res) => {
+    if (!req.session.user_id) {
+      return res.send("only logged in users may remove a like");
+    }
     db.query(
       `
       DELETE FROM likes
