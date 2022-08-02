@@ -27,6 +27,7 @@ module.exports = (db) => {
           descriptions: [],
           urls: [],
           tags: {},
+          user: req.session.user_id,
         };
         resources.forEach((i) => {
           templateVars.ids.push(i.id);
