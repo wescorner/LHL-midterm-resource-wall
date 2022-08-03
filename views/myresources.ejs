@@ -60,7 +60,7 @@
             <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
               <button class="btn btn-primary" type="submit">Delete Resource</button>
             </form>
-            <div class="stars">
+            <div class="stars" value="<%=owned.ratings[i]%>">
               <i class="fa-regular fa-star 1star"></i>
               <i class="fa-regular fa-star 2star"></i>
               <i class="fa-regular fa-star 3star"></i>
@@ -112,7 +112,7 @@
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
-          <div class="stars">
+          <div class="stars" value="<%=liked.ratings[i]%>">
             <i class="fa-regular fa-star 1star"></i>
             <i class="fa-regular fa-star 2star"></i>
             <i class="fa-regular fa-star 3star"></i>

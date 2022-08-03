@@ -79,15 +79,16 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     db.query(
       `
-      SELECT resources.*, tag, likes.user_id AS like
+      SELECT resources.*, tag, likes.user_id AS like, rating
       FROM resources
       FULL OUTER JOIN likes ON resources.id = likes.resource_id
       FULL OUTER JOIN tags ON resources.id = tags.resource_id
+      FULL OUTER JOIN ratings ON resources.id = ratings.resource_id
       WHERE resources.user_id = $1
       OR resources.id IN (
         SELECT resource_id FROM likes WHERE likes.user_id = $1
       )
-      GROUP BY resources.id, tag, likes.user_id;
+      GROUP BY resources.id, tag, likes.user_id, rating;
       `,
       [req.params.id]
     )
@@ -100,6 +101,7 @@ module.exports = (db) => {
             titles: [],
             descriptions: [],
             urls: [],
+            ratings: [],
             tags: {},
           },
           liked: {
@@ -107,6 +109,7 @@ module.exports = (db) => {
             titles: [],
             descriptions: [],
             urls: [],
+            ratings: [],
             tags: {},
           },
           user: req.session.user_id,
@@ -122,6 +125,7 @@ module.exports = (db) => {
             templateVars.owned.titles.push(i.title);
             templateVars.owned.descriptions.push(i.description);
             templateVars.owned.urls.push(i.url);
+            templateVars.owned.ratings.push(i.rating);
           } else {
             templateVars.liked.tags[i.id]
               ? templateVars.liked.tags[i.id].push(i.tag)
@@ -131,6 +135,7 @@ module.exports = (db) => {
             templateVars.liked.titles.push(i.title);
             templateVars.liked.descriptions.push(i.description);
             templateVars.liked.urls.push(i.url);
+            templateVars.owned.ratings.push(i.rating);
           }
         });
         console.log(templateVars);
