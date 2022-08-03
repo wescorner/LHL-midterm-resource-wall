@@ -1,32 +1,38 @@
-<!--NAV BAR-->
-  <header class="container">
-    <nav class="navbar fixed-top navbar-light bg-dark">
-      <a class="text-white">Resource Wall</a>
-      <div class="nav-options">
-
-        <% if (user) { %>
-          <!--LOGGED IN-->
-          <form>
-            <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
-          </form>
-          <form method="GET" action="/api/resources/<%=user%>">
-            <button type="submit" class="btn btn-dark" id ='my-resources'>My Resources</button>
-          </form>
-          <form method="GET" action="/api/profile/<%=user%>">
-            <button type="submit" class="btn btn-dark" id ='profile'>Profile</button>
-          </form>
-          <form>
-            <button type="button" class="btn btn-dark" id="logout-button">Logout</button>
-          </form>
-        <% } else { %>
-          <!--LOGGED OUT-->
-          <form>
-            <button type="button" class="btn btn-dark" id ='register'>Register</button>
-          </form>
-          <form>
-            <button type="button" class="btn btn-dark" id ='login'>Login</button>
-          </form>
-        <% } %>
-      </div>
-    </nav>
-  </header>
+<header class="container">
+  <nav class="navbar fixed-top navbar-light bg-dark">
+    <a class="text-white" href="/api/resources">Resource Wall</a>
+    <div class="nav-options">
+      <% if (user) { %>
+      <!--LOGGED IN-->
+      <form>
+        <button type="button" class="btn btn-dark" id="add-resource">
+          Add Resource
+        </button>
+      </form>
+      <form method="GET" action="/api/resources/<%=user%>">
+        <button type="submit" class="btn btn-dark" id="my-resources">
+          My Resources
+        </button>
+      </form>
+      <form method="GET" action="/api/users/<%=user%>">
+        <button type="submit" class="btn btn-dark" id="profile">Profile</button>
+      </form>
+      <form method="POST" action="/api/logout">
+        <button type="submit" class="btn btn-dark" id="logout-button">
+          Logout
+        </button>
+      </form>
+      <% } else { %>
+      <!--LOGGED OUT-->
+      <form>
+        <button type="button" class="btn btn-dark" id="register">
+          Register
+        </button>
+      </form>
+      <form>
+        <button type="button" class="btn btn-dark" id="login">Login</button>
+      </form>
+      <% } %>
+    </div>
+  </nav>
+</header>

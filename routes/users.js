@@ -10,6 +10,30 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get("/:profile", (req, res) => {
+    db.query(
+      `
+      SELECT *
+      FROM users
+      WHERE id = $1;
+      `,
+      [req.params.profile]
+    )
+      .then((data) => {
+        const users = data.rows[0];
+        console.log(users);
+        templateVars = {
+          user: users.id,
+          name: users.name,
+          email: users.email,
+          password: users.password,
+        };
+        res.render("profile", templateVars);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
   router.post("/", (req, res) => {
     db.query(
       `
