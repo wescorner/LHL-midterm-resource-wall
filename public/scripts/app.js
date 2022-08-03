@@ -169,16 +169,20 @@ $(document).ready(function() {
         if (user != 'incorrect password' && user != 'user does not exist') {
           $navbar = $('.nav-options');
           $navbar.children().remove();
+          console.log('-----------------------------');
+          console.log(user);
           $navbar.append(`
             <!--LOGGED IN-->
             <form>
               <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
             </form>
-            <form method="GET" action="/api/resources/<%=user%>">
-              <button type="submit" class="btn btn-dark" id ='my-resources'>My Resources</button>
+            <form method="GET" action="/api/resources/${user.user}">
+              <button type="submit" class="btn btn-dark" id="my-resources">
+                My Resources
+              </button>
             </form>
-            <form method="GET" action="/api/profile/<%=user%>">
-              <button type="submit" class="btn btn-dark" id ='profile'>Profile</button>
+            <form method="GET" action="/api/users/${user.user}">
+              <button type="submit" class="btn btn-dark" id="profile">Profile</button>
             </form>
             <form>
               <button type="button" class="btn btn-dark" id="logout-button">Logout</button>
@@ -205,5 +209,12 @@ $(document).ready(function() {
         console.log('created a resource');
         closeForms();
       });
+
+      const pathname = window.location.pathname;
+      $(this).append(`
+        <form id="reset" style="visibility:hidden" action="http://localhost:8080${pathname}" method="GET"></form>
+      `)
+
+      $('#reset').submit();
     })
 });
