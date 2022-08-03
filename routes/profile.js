@@ -6,6 +6,7 @@
  */
 
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
@@ -33,12 +34,23 @@ module.exports = (db) => {
       WHERE id = $4
       RETURNING *;
       `,
-      [req.body.name, req.body.email, req.body.password, req.params.id]
+      [
+        req.body.name,
+        req.body.email,
+        bcrypt.hashSync(req.body.password, 10),
+        req.params.id,
+      ]
     )
       .then((data) => {
         const profile = data.rows[0];
         console.log(profile);
-        res.send(`updated user ${req.params.id}!`);
+        const templateVars = {
+          user: profile.id,
+          name: profile.name,
+          email: profile.email,
+          password: profile.password,
+        };
+        res.render("profile", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
