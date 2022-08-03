@@ -25,25 +25,77 @@
 <body>
   <%- include('partials/_navbar') %>
   <main>
-    <% for(const i in titles) {%>
+    <h1>Created Resources</h1>
+
+    <% for(const i in owned.titles) {%>
+      <!--RESOURCE FRAME-->
+      <section id="resource-wrapper">
+        <div class="resource bg-light">
+          <header>
+            <a href="<%=owned.urls[i]%>"><%=owned.urls[i]%></a>
+            <div value='false' class="likes">
+              <i class="fa-regular fa-heart"></i>
+            </div>
+          </header>
+  
+          <section class="title-description">
+            <h2><%=owned.titles[i]%></h2>
+            <p><%=owned.descriptions[i]%></p>
+          </section>
+  
+          <section class="tags">
+            <label>
+              <% for (const tag of owned.tags[owned.ids[i]]) { %>
+                <span class="badge bg-secondary"><%=tag%></span>
+              <% } %>
+              <span class="badge bg-secondary add-tag">+</span>
+            </label>
+          </section>
+  
+          <footer>
+            <div class='comment-dropdown'>
+              <label>Comments </label>
+              <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="stars">
+              <i class="fa-regular fa-star 1star"></i>
+              <i class="fa-regular fa-star 2star"></i>
+              <i class="fa-regular fa-star 3star"></i>
+              <i class="fa-regular fa-star 4star"></i>
+              <i class="fa-regular fa-star 5star"></i>
+            </div>
+          </footer>
+        </div>
+        <section id=<%=owned.ids[i]%> class="comments">
+          <form class="new-comment">
+            <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
+            <button type="button" class="btn btn-success new-comment-button">Comment</button>
+          </form>
+        </section>
+      </section>
+      <% } %>
+
+    <h1>Liked Resources</h1>
+
+    <% for(const i in liked.titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
       <div class="resource bg-light">
         <header>
-          <a href="<%=urls[i]%>"><%=urls[i]%></a>
+          <a href="<%=liked.urls[i]%>"><%=liked.urls[i]%></a>
           <div value='false' class="likes">
             <i class="fa-regular fa-heart"></i>
           </div>
         </header>
 
         <section class="title-description">
-          <h2><%=titles[i]%></h2>
-          <p><%=descriptions[i]%></p>
+          <h2><%=liked.titles[i]%></h2>
+          <p><%=liked.descriptions[i]%></p>
         </section>
 
         <section class="tags">
           <label>
-            <% for (const tag of tags[ids[i]]) { %>
+            <% for (const tag of liked.tags[liked.ids[i]]) { %>
               <span class="badge bg-secondary"><%=tag%></span>
             <% } %>
             <span class="badge bg-secondary add-tag">+</span>
@@ -64,7 +116,7 @@
           </div>
         </footer>
       </div>
-      <section id=<%=ids[i]%> class="comments">
+      <section id=<%=liked.ids[i]%> class="comments">
         <form class="new-comment">
           <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
           <button type="button" class="btn btn-success new-comment-button">Comment</button>

@@ -79,14 +79,15 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     db.query(
       `
-      SELECT resources.*, tag FROM resources
+      SELECT resources.*, tag, likes.id AS like
+      FROM resources
       LEFT JOIN likes ON resources.id = likes.resource_id
       JOIN tags ON resources.id = tags.resource_id
       WHERE resources.user_id = $1
       OR resources.id IN (
         SELECT resource_id FROM likes WHERE likes.user_id = $1
       )
-      GROUP BY resources.id, tag;
+      GROUP BY resources.id, tag, likes.id;
       `,
       [req.params.id]
     )
@@ -94,22 +95,42 @@ module.exports = (db) => {
         const resources = data.rows;
         console.log(resources);
         templateVars = {
-          ids: [],
-          titles: [],
-          descriptions: [],
-          urls: [],
-          tags: {},
+          owned: {
+            ids: [],
+            titles: [],
+            descriptions: [],
+            urls: [],
+            tags: {},
+          },
+          liked: {
+            ids: [],
+            titles: [],
+            descriptions: [],
+            urls: [],
+            tags: {},
+          },
           user: req.session.user_id,
         };
         resources.forEach((i) => {
-          templateVars.tags[i.id]
-            ? templateVars.tags[i.id].push(i.tag)
-            : (templateVars.tags[i.id] = [i.tag]);
-          if (templateVars.ids.includes(i.id)) return;
-          templateVars.ids.push(i.id);
-          templateVars.titles.push(i.title);
-          templateVars.descriptions.push(i.description);
-          templateVars.urls.push(i.url);
+          if (i.like === null) {
+            templateVars.owned.tags[i.id]
+              ? templateVars.owned.tags[i.id].push(i.tag)
+              : (templateVars.owned.tags[i.id] = [i.tag]);
+            if (templateVars.owned.ids.includes(i.id)) return;
+            templateVars.owned.ids.push(i.id);
+            templateVars.owned.titles.push(i.title);
+            templateVars.owned.descriptions.push(i.description);
+            templateVars.owned.urls.push(i.url);
+          } else {
+            templateVars.owned.tags[i.id]
+              ? templateVars.liked.tags[i.id].push(i.tag)
+              : (templateVars.liked.tags[i.id] = [i.tag]);
+            if (templateVars.liked.ids.includes(i.id)) return;
+            templateVars.liked.ids.push(i.id);
+            templateVars.liked.titles.push(i.title);
+            templateVars.liked.descriptions.push(i.description);
+            templateVars.liked.urls.push(i.url);
+          }
         });
         res.render("myresources", templateVars);
       })
