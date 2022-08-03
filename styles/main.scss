@@ -4,7 +4,8 @@ body {
   align-items: center;
   min-height: 100vh;
 
-  background: rgb(163, 208, 219);
+  background: rgb(80, 87, 129);
+  background-image: url('/images/asfalt-light.png');;
   // background: linear-gradient(
   //   227deg,
   //   rgba(163, 208, 219, 1) 0%,
@@ -21,5 +22,9 @@ body {
   #search-bar {
     width: 70%;
     margin: 2rem 2rem 0 2rem;
+  }
+  #search-button {
+    color:rgb(144, 156, 224);
+    border-color: rgb(144, 156, 224);
   }
 }

@@ -30,7 +30,7 @@
     <form id='search-bar' action="/api/resources" method="GET">
       <div class="input-group mb-3">
         <input name="input" type="text" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="search-button" class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </form>
 
@@ -38,7 +38,7 @@
     <% for(const i in titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
-      <div class="resource bg-light">
+      <div class="resource bg-dark text-white">
         <header>
           <a href="<%=urls[i]%>"><%=urls[i]%></a>
           <div value='false' class="likes">
@@ -54,9 +54,9 @@
         <section class="tags">
           <label>
             <% for (const tag of tags[ids[i]]) { %>
-              <span class="badge bg-secondary"><%=tag%></span>
+              <span class="badge"><%=tag%></span>
             <% } %>
-            <span class="badge bg-secondary add-tag">+</span>
+            <span class="badge add-tag">+</span>
           </label>
         </section>
 
@@ -65,7 +65,14 @@
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
-          <div class="stars">
+          <div value="0" class="stars solid-stars">
+            <i class="fa-solid fa-star 1star starsIcons"></i>
+            <i class="fa-solid fa-star 2star starsIcons"></i>
+            <i class="fa-solid fa-star 3star starsIcons"></i>
+            <i class="fa-solid fa-star 4star starsIcons"></i>
+            <i class="fa-solid fa-star 5star starsIcons"></i>
+          </div>
+          <div class="stars regular-stars">
             <i class="fa-regular fa-star 1star starsIcons"></i>
             <i class="fa-regular fa-star 2star starsIcons"></i>
             <i class="fa-regular fa-star 3star starsIcons"></i>
@@ -74,10 +81,10 @@
           </div>
         </footer>
       </div>
-      <section id=<%=ids[i]%> class="comments">
+      <section id=<%=ids[i]%> class="comments bg-dark text-white">
         <form class="new-comment">
           <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
-          <button type="button" class="btn btn-success new-comment-button">Comment</button>
+          <button type="button" class="btn new-comment-button">Comment</button>
         </form>
       </section>
     </section>
