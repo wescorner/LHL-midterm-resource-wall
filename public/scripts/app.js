@@ -23,7 +23,6 @@ $(document).ready(function() {
   }
   startRegisterButton();
 
-
   //ADD RESOURCE BUTTON
   const startAddResourceButton = function () {
     $resourceButton = $('#add-resource');
