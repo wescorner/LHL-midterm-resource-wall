@@ -9,9 +9,9 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //View Resources
   router.get("/", (req, res) => {
     const input = req.query.input;
-    console.log(input);
     queryParams = [];
     queryString = `
       SELECT resources.*, tag
@@ -52,6 +52,7 @@ module.exports = (db) => {
       });
   });
 
+  //Add Resource
   router.post("/", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may create a resource");
@@ -73,21 +74,25 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //My Resources
   router.get("/:id", (req, res) => {
     db.query(
       `
-      SELECT resources.* FROM resources
-      LEFT JOIN likes ON resources.id = resource_id
+      SELECT resources.*, tag FROM resources
+      LEFT JOIN likes ON resources.id = likes.resource_id
+      JOIN tags ON resources.id = tags.resource_id
       WHERE resources.user_id = $1
       OR resources.id IN (
-        SELECT resource_id FROM likes WHERE user_id = $1
+        SELECT resource_id FROM likes WHERE likes.user_id = $1
       )
-      GROUP BY resources.id;
+      GROUP BY resources.id, tag;
       `,
       [req.params.id]
     )
       .then((data) => {
         const resources = data.rows;
+        console.log(resources);
         templateVars = {
           ids: [],
           titles: [],
@@ -106,7 +111,7 @@ module.exports = (db) => {
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
         });
-        res.render("index", templateVars);
+        res.render("myresources", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
