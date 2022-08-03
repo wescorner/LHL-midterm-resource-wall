@@ -86,8 +86,10 @@
       <div class="resource bg-light">
         <header>
           <a href="<%=liked.urls[i]%>"><%=liked.urls[i]%></a>
-          <div value='false' class="likes">
-            <i class="fa-regular fa-heart"></i>
+          <div value='true' class="likes">
+            <!-- <form action="/api/likes/<%=liked.ids[i]%>?_method=DELETE"> -->
+              <i class="fa-solid fa-heart" type="submit"></i>
+            <!-- </form> -->
           </div>
         </header>
 

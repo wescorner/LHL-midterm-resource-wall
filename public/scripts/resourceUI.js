@@ -147,7 +147,8 @@ $('.stars').on({
 
     $.ajax(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`, {type: 'DELETE'})
       .then(function() {
-        console.log('liked');
+        console.log('unliked');
+        location.reload();
       });
   }
 
