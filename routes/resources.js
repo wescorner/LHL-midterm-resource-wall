@@ -138,5 +138,28 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Remove Resource
+  router.delete("/:id", (req, res) => {
+    if (!req.session.user_id) {
+      return res.send("only logged in users may create a resource");
+    }
+    db.query(
+      `
+      DELETE FROM resources
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [req.params.id]
+    )
+      .then((data) => {
+        const resources = data.rows;
+        console.log(resources);
+        res.redirect("back");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
   return router;
 };
