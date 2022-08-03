@@ -12,8 +12,8 @@
           <form method="GET" action="/api/resources/<%=user%>">
             <button type="submit" class="btn btn-dark" id ='my-resources'>My Resources</button>
           </form>
-          <form>
-            <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
+          <form method="GET" action="/api/profile/<%=user%>">
+            <button type="submit" class="btn btn-dark" id ='profile'>Profile</button>
           </form>
           <form>
             <button type="button" class="btn btn-dark" id="logout-button">Logout</button>

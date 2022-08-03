@@ -1,4 +1,69 @@
 $(document).ready(function() {
+  //RATINGS
+  const startStarIcons = function () {
+    //ON CLICK
+    $('.starsIcons').on('click', function () {
+      const $starContainer = $(this).parent();
+      let rating = 0;
+      if ($(this).attr('class').includes('1star')) {
+        rating = 1;
+        replaceStars($starContainer, 1);
+      }
+      if ($(this).attr('class').includes('2star')) {
+        rating = 2;
+        replaceStars($starContainer, 2);
+      }
+      if ($(this).attr('class').includes('3star')) {
+        rating = 3;
+        replaceStars($starContainer, 3);
+      }
+      if ($(this).attr('class').includes('4star')) {
+        rating = 4;
+        replaceStars($starContainer, 4);
+      }
+      if ($(this).attr('class').includes('5star')) {
+        rating = 5;
+        replaceStars($starContainer, 5);
+      }
+
+
+      resource_id = $starContainer.parent().parent().siblings().attr('id');
+      $.ajax(`http://localhost:8080/api/ratings/${resource_id}`, {type: 'DELETE', rating: rating})
+      .then(function() {
+        console.log('deleted rating');
+      });
+
+
+      $.post(`http://localhost:8080/api/ratings/${resource_id}`, {rating: rating})
+      .then(function() {
+        console.log('rated');
+      });
+    })
+  }
+  startStarIcons();
+
+  const replaceStars = function ($starContainer, rating) {
+    const starArray = [];
+    for (let i = 1; i <= 5; i++){
+      if (i <= rating) {
+        starArray.push('fa-solid');
+      } else {
+        starArray.push('fa-regular');
+      }
+    }
+    $starContainer.children().remove();
+    $starContainer.append(`
+      <i class="${starArray[0]} fa-star 1star starsIcons"></i>
+      <i class="${starArray[1]} fa-star 2star starsIcons"></i>
+      <i class="${starArray[2]} fa-star 3star starsIcons"></i>
+      <i class="${starArray[3]} fa-star 4star starsIcons"></i>
+      <i class="${starArray[4]} fa-star 5star starsIcons"></i>
+    `);
+    startStarIcons();
+  }
+
+
+  //LIKES
   $('.likes').on({
     mouseenter: function () {
       const $like = $(this)

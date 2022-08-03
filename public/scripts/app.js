@@ -25,13 +25,15 @@ $(document).ready(function() {
 
 
   //ADD RESOURCE BUTTON
-  $resourceButton = $('#add-resource');
-  $resourceButton.on('click', function () {
-    closeForms();
-    $('.overlay').css('visibility', 'visible');
-    $('.add-resource-wrapper').slideDown('slow');
-  })
-
+  const startAddResourceButton = function () {
+    $resourceButton = $('#add-resource');
+    $resourceButton.on('click', function () {
+      closeForms();
+      $('.overlay').css('visibility', 'visible');
+      $('.add-resource-wrapper').slideDown('slow');
+    })
+  }
+  startAddResourceButton();
 
   //CLOSE BUTTON
   $closeButton = $('.close');
@@ -172,11 +174,11 @@ $(document).ready(function() {
             <form>
               <button type="button" class="btn btn-dark" id ='add-resource'>Add Resource</button>
             </form>
-            <form>
-              <button type="button" class="btn btn-dark" id ='my-resources'>My Resources</button>
+            <form method="GET" action="/api/resources/<%=user%>">
+              <button type="submit" class="btn btn-dark" id ='my-resources'>My Resources</button>
             </form>
-            <form>
-              <button type="button" class="btn btn-dark" id ='profile'>Profile</button>
+            <form method="GET" action="/api/profile/<%=user%>">
+              <button type="submit" class="btn btn-dark" id ='profile'>Profile</button>
             </form>
             <form>
               <button type="button" class="btn btn-dark" id="logout-button">Logout</button>
@@ -184,6 +186,7 @@ $(document).ready(function() {
           `);
           closeForms();
           startLogoutButton();
+          startAddResourceButton();
         } else {
           alert('error');
         }
