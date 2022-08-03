@@ -33,6 +33,10 @@
         position: absolute;
       }
 
+      i:hover {
+        cursor: pointer;
+      }
+
       i.fa-solid {
         color:red;
       }
@@ -59,11 +63,20 @@
       background-color: rgb(144, 156, 224);
     }
   }
+  .badge:hover {
+    cursor: pointer;
+  }
 
   footer {
     display:flex;
     justify-content: space-between;
     position: relative;
+
+    .comment-dropdown {
+      i:hover {
+        cursor: pointer;
+      }
+    }
 
     .comments {
       align-items: center;
@@ -71,6 +84,11 @@
     .stars {
       position: absolute;
       right: 0;
+
+      i:hover {
+        cursor: pointer;
+      }
+
       i.fa-solid {
         visibility: hidden;
         color: gold;
