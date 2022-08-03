@@ -57,8 +57,8 @@
               <label>Comments </label>
               <i class="fa-solid fa-angle-down"></i>
             </div>
-            <form action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
-              <button type="submit">Delete Resource</button>
+            <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
+              <button class="btn btn-primary" type="submit">Delete Resource</button>
             </form>
             <div class="stars">
               <i class="fa-regular fa-star 1star"></i>

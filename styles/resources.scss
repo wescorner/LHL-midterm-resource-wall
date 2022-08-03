@@ -94,6 +94,11 @@
         color: gold;
       }
     }
+    .delete-button >*{
+      background-color: rgb(144, 156, 224);
+      position: absolute;
+      right: 40%;
+    }
   }
 }
 

@@ -79,15 +79,15 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     db.query(
       `
-      SELECT resources.*, tag, likes.id AS like
+      SELECT resources.*, tag, likes.user_id AS like
       FROM resources
-      LEFT JOIN likes ON resources.id = likes.resource_id
-      JOIN tags ON resources.id = tags.resource_id
+      FULL OUTER JOIN likes ON resources.id = likes.resource_id
+      FULL OUTER JOIN tags ON resources.id = tags.resource_id
       WHERE resources.user_id = $1
       OR resources.id IN (
         SELECT resource_id FROM likes WHERE likes.user_id = $1
       )
-      GROUP BY resources.id, tag, likes.id;
+      GROUP BY resources.id, tag, likes.user_id;
       `,
       [req.params.id]
     )
@@ -112,7 +112,8 @@ module.exports = (db) => {
           user: req.session.user_id,
         };
         resources.forEach((i) => {
-          if (i.like === null) {
+          console.log("i:", i);
+          if (i.user_id === req.session.user_id) {
             templateVars.owned.tags[i.id]
               ? templateVars.owned.tags[i.id].push(i.tag)
               : (templateVars.owned.tags[i.id] = [i.tag]);
@@ -122,7 +123,7 @@ module.exports = (db) => {
             templateVars.owned.descriptions.push(i.description);
             templateVars.owned.urls.push(i.url);
           } else {
-            templateVars.owned.tags[i.id]
+            templateVars.liked.tags[i.id]
               ? templateVars.liked.tags[i.id].push(i.tag)
               : (templateVars.liked.tags[i.id] = [i.tag]);
             if (templateVars.liked.ids.includes(i.id)) return;
@@ -132,6 +133,7 @@ module.exports = (db) => {
             templateVars.liked.urls.push(i.url);
           }
         });
+        console.log(templateVars);
         res.render("myresources", templateVars);
       })
       .catch((err) => {
