@@ -27,20 +27,32 @@ module.exports = (db) => {
       });
   });
   router.post("/:id", (req, res) => {
-    db.query(
-      `
+    queryParams = [req.session.user_id];
+    queryString = `
       UPDATE users
-      SET name = $1, email = $2, password = $3
-      WHERE id = $4
+      SET id = $1
+    `;
+
+    if (req.body.name) {
+      queryParams.push(req.body.name);
+      queryString += `, name = $${queryParams.length}`;
+    }
+    if (req.body.email) {
+      queryParams.push(req.body.email);
+      queryString += `, email = $${queryParams.length}`;
+    }
+
+    if (req.body.password) {
+      queryParams.push(bcrypt.hashSync(req.body.password, 10));
+      queryString += `, password = $${queryParams.length}`;
+    }
+
+    queryString += `
+      WHERE id = $1
       RETURNING *;
-      `,
-      [
-        req.body.name,
-        req.body.email,
-        bcrypt.hashSync(req.body.password, 10),
-        req.params.id,
-      ]
-    )
+    `;
+
+    db.query(queryString, queryParams)
       .then((data) => {
         const profile = data.rows[0];
         console.log(profile);

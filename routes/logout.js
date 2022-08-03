@@ -14,7 +14,7 @@ module.exports = (db) => {
       return res.send("not currently logged in");
     }
     res.clearCookie("user_id");
-    res.send("logged out");
+    res.redirect("/api/resources");
   });
   return router;
 };
