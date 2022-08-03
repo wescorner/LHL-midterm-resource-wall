@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
   <title>Home Page</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.svg"/>
+=======
+  <title>Resource Wall</title>
+
+>>>>>>> master
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -30,7 +35,7 @@
     <form id='search-bar' action="/api/resources" method="GET">
       <div class="input-group mb-3">
         <input name="input" type="text" class="form-control" placeholder="search" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="search-button" class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </form>
 
@@ -38,7 +43,7 @@
     <% for(const i in titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
-      <div class="resource bg-light">
+      <div class="resource bg-dark text-white">
         <header>
           <a href="<%=urls[i]%>"><%=urls[i]%></a>
           <div value='false' class="likes">
@@ -54,9 +59,9 @@
         <section class="tags">
           <label>
             <% for (const tag of tags[ids[i]]) { %>
-              <span class="badge bg-secondary"><%=tag%></span>
+              <span class="badge"><%=tag%></span>
             <% } %>
-            <span class="badge bg-secondary add-tag">+</span>
+            <span class="badge add-tag">+</span>
           </label>
         </section>
 
@@ -65,19 +70,26 @@
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
-          <div class="stars">
-            <i class="fa-regular fa-star 1star"></i>
-            <i class="fa-regular fa-star 2star"></i>
-            <i class="fa-regular fa-star 3star"></i>
-            <i class="fa-regular fa-star 4star"></i>
-            <i class="fa-regular fa-star 5star"></i>
+          <div value="0" class="stars solid-stars">
+            <i class="fa-solid fa-star 1star starsIcons"></i>
+            <i class="fa-solid fa-star 2star starsIcons"></i>
+            <i class="fa-solid fa-star 3star starsIcons"></i>
+            <i class="fa-solid fa-star 4star starsIcons"></i>
+            <i class="fa-solid fa-star 5star starsIcons"></i>
+          </div>
+          <div class="stars regular-stars">
+            <i class="fa-regular fa-star 1star starsIcons"></i>
+            <i class="fa-regular fa-star 2star starsIcons"></i>
+            <i class="fa-regular fa-star 3star starsIcons"></i>
+            <i class="fa-regular fa-star 4star starsIcons"></i>
+            <i class="fa-regular fa-star 5star starsIcons"></i>
           </div>
         </footer>
       </div>
-      <section id=<%=ids[i]%> class="comments">
+      <section id=<%=ids[i]%> class="comments bg-dark text-white">
         <form class="new-comment">
           <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
-          <button type="button" class="btn btn-success new-comment-button">Comment</button>
+          <button type="button" class="btn new-comment-button">Comment</button>
         </form>
       </section>
     </section>
@@ -88,50 +100,50 @@
   <!--OVERLAY-->
   <section class="overlay">
     <!--LOGIN -->
-    <section id="login-wrapper" class="login-wrapper">
+    <section id="login-wrapper" class="login-wrapper text-white">
       <form>
-        <h2 id="login-header">Login</h2>
+        <h2 class="bg-dark" id="login-header">Login</h2>
         <input name="email" type="email" class="form-control" placeholder="email" aria-describedby="basic-addon1">
         <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         <div id="login-register">
-          <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
           <button type="button" class="btn btn-success" id="login-button">Login</button>
+          <button type="button" class="btn btn-dark close">Close</button>
         </div>
       </form>
     </section>
 
     <!--REGISTER -->
-    <section class="register-wrapper">
+    <section class="register-wrapper text-white">
       <form action="/api/users" method="POST">
-        <h2>REGISTER</h2>
+        <h2 class="bg-dark">REGISTER</h2>
         <input name="name" type="text" class="form-control" placeholder="name" aria-describedby="basic-addon1">
         <input name="email" type="email" class="form-control" placeholder="email" aria-describedby="basic-addon1">
         <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         <div id="register-login">
-          <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
           <button type="submit" class="btn btn-success">Register</button>
+          <button type="button" class="btn btn-dark close">Close</button>
         </div>
       </form>
     </section>
 
     <!--ADD RESOURCE -->
-    <section class="add-resource-wrapper">
+    <section class="add-resource-wrapper text-white">
       <form>
-        <h2>Add Resource</h2>
+        <h2 class="bg-dark">Add Resource</h2>
         <input name="url" type="text" class="form-control" placeholder="url" aria-label="Username" aria-describedby="basic-addon1">
         <input name="title" type="text" class="form-control" placeholder="title" aria-label="Password" aria-describedby="basic-addon1">
         <textarea name="description" class="form-control" placeholder="description" aria-label="With textarea"></textarea>
         <div id="resource-button">
           <button type="button" class="btn btn-success" id="add-resource-button">Add Resource</button>
+          <button type="button" class="btn btn-dark close">Close</button>
         </div>
-        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
 
     <!--ADD TAG-->
-    <section class="add-tag-wrapper">
+    <section class="add-tag-wrapper text-white">
       <form>
-        <h2>Add Tag</h2>
+        <h2 class="bg-dark">Add Tag</h2>
         <input name="tag" type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1">
         <div id="tag-button">
           <button type="button" class="btn btn-success" id="add-tag-button">Add Tag</button>

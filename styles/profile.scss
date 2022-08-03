@@ -1,5 +1,6 @@
 body {
-  background: #A3D0DB;
+  background-color: rgb(80, 87, 129);
+  background-image: url('/images/asfalt-light.png');
 }
 
 .form-control:focus {
@@ -8,17 +9,17 @@ body {
 }
 
 .profile-button {
-  background: #A3D0DB;
+  background-color: rgb(144, 156, 224);
   box-shadow: none;
   border: none
 }
 
 .profile-button:hover {
-  background: #000;
+  background: #A3D0DB;
 }
 
 .profile-button:active {
-  background: #000;
+  background: #A3D0DB;
   box-shadow: none
 }
 

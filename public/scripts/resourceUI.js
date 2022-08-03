@@ -1,4 +1,108 @@
 $(document).ready(function() {
+
+  //RATINGS
+
+  $('.starsIcons').on({
+    mouseenter: function () {
+      const $regularStarContainer = $(this).parent();
+      const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
+      if ($(this).attr('class').includes('1star')) {
+        $solidStarContainer.children('.1star').css('visibility','visible');
+      }
+      if ($(this).attr('class').includes('2star')) {
+        $solidStarContainer.children('.1star').css('visibility','visible');
+        $solidStarContainer.children('.2star').css('visibility','visible');
+      }
+      if ($(this).attr('class').includes('3star')) {
+        $solidStarContainer.children('.1star').css('visibility','visible');
+        $solidStarContainer.children('.2star').css('visibility','visible');
+        $solidStarContainer.children('.3star').css('visibility','visible');
+      }
+      if ($(this).attr('class').includes('4star')) {
+        $solidStarContainer.children('.1star').css('visibility','visible');
+        $solidStarContainer.children('.2star').css('visibility','visible');
+        $solidStarContainer.children('.3star').css('visibility','visible');
+        $solidStarContainer.children('.4star').css('visibility','visible');
+      }
+      if ($(this).attr('class').includes('5star')) {
+        $solidStarContainer.children('.1star').css('visibility','visible');
+        $solidStarContainer.children('.2star').css('visibility','visible');
+        $solidStarContainer.children('.3star').css('visibility','visible');
+        $solidStarContainer.children('.4star').css('visibility','visible');
+        $solidStarContainer.children('.5star').css('visibility','visible');
+      }
+    },
+    click: function() {
+      const $regularStarContainer = $(this).parent();
+      const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
+      let rating = 0;
+      if ($(this).attr('class').includes('1star')) {
+        rating = 1;
+        $solidStarContainer.attr('value', 1);
+      }
+      if ($(this).attr('class').includes('2star')) {
+        rating = 2;
+        $solidStarContainer.attr('value', 2);
+      }
+      if ($(this).attr('class').includes('3star')) {
+        rating = 3;
+        $solidStarContainer.attr('value', 3);
+      }
+      if ($(this).attr('class').includes('4star')) {
+        rating = 4;
+        $solidStarContainer.attr('value', 4);
+      }
+      if ($(this).attr('class').includes('5star')) {
+        rating = 5;
+        $solidStarContainer.attr('value', 5);
+      }
+
+      resource_id = $regularStarContainer.parent().parent().siblings().attr('id');
+      $.ajax(`http://localhost:8080/api/ratings/${resource_id}`, {type: 'DELETE', rating: rating})
+      .then(function() {
+        console.log('deleted rating');
+      });
+
+
+      $.post(`http://localhost:8080/api/ratings/${resource_id}`, {rating: rating})
+      .then(function() {
+        console.log('rated');
+      });
+    }
+  });
+
+$('.stars').on({
+  mouseleave: function () {
+    $solidStarContainer = $(this).parent().find('.solid-stars');
+    if ($solidStarContainer.attr('value') === '0') {
+      $solidStarContainer.children('.1star').css('visibility', 'hidden');
+      $solidStarContainer.children('.2star').css('visibility', 'hidden');
+      $solidStarContainer.children('.3star').css('visibility', 'hidden');
+      $solidStarContainer.children('.4star').css('visibility', 'hidden');
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+    }
+    if ($solidStarContainer.attr('value') === '1') {
+      $solidStarContainer.children('.2star').css('visibility', 'hidden');
+      $solidStarContainer.children('.3star').css('visibility', 'hidden');
+      $solidStarContainer.children('.4star').css('visibility', 'hidden');
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+    }
+    if ($solidStarContainer.attr('value') === '2') {
+      $solidStarContainer.children('.3star').css('visibility', 'hidden');
+      $solidStarContainer.children('.4star').css('visibility', 'hidden');
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+    }
+    if ($solidStarContainer.attr('value') === '3') {
+      $solidStarContainer.children('.4star').css('visibility', 'hidden');
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+    }
+    if ($solidStarContainer.attr('value') === '4') {
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+    }
+  }
+});
+
+  //LIKES
   $('.likes').on({
     mouseenter: function () {
       const $like = $(this)
@@ -65,7 +169,7 @@ $(document).ready(function() {
 
       $tagTarget = $currentResource.parent().find('.add-tag');
 
-      $(`<span style="margin-left:0.1rem; margin-right: 0.1rem;" class="badge bg-secondary">${tag}</span>`)
+      $(`<span style="margin-left:0.1rem; background-color:rgb(80, 87, 129); margin-right: 0.2rem;" class="badge">${tag}</span>`)
       .insertBefore($tagTarget);
     });
   });
@@ -75,6 +179,7 @@ $(document).ready(function() {
     //COMMENTS DROPDOWN
   $('.comment-dropdown').click(function () {
     const $dropdown = $(this).parent().parent().siblings();
+    console.log($dropdown);
     if ($(this).children('.fa-angle-down').length) {
       loadComments($dropdown.attr('id'), $dropdown);
       $(this).children('.fa-angle-down').remove();
@@ -116,14 +221,23 @@ $(document).ready(function() {
 
     $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
     .then(function(comment) {
-      console.log(comment);
-      $resource.prepend(`
-        <div>
-          <h3>${escape(comment.user_id)}</h3>
-          <p>${escape(comment.comment)}</p>
-        </div>
-      `);
-      $(this).parent().parent().slideDown('fast');
+      $.ajax(`http://localhost:8080/api/comments/${$resource.attr('id')}`)
+        .then(function (commentsObj) {
+          $resource.children('form').before(`
+            <div>
+              <h3>${escape(commentsObj.user_names[0])}</h3>
+              <p>${escape(commentsObj.comments[0])}</p>
+            </div>
+          `);
+        });
+      $resource.slideDown('fast');
     });
   });
+
+  //Convert HTML to a string
+  const escape = function(str) {
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
 });

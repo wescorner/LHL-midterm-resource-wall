@@ -10,18 +10,20 @@
   padding: 1rem;
   border: 0.1rem groorgb(121, 121, 121)ack;
   width: 100%;
+  border-radius: 0.5rem;
 
   header {
 
     display:flex;
     justify-content: space-between;
-    border-bottom: 0.1rem solid black;
+    border-bottom: 0.2rem solid rgb(80, 87, 129);
     padding-bottom: 0.5rem;
     margin-left: -1rem;
     margin-right: -1rem;
 
     a {
       margin-left: 1rem;
+      color: rgb(144, 156, 224);
     }
 
     div {
@@ -29,6 +31,10 @@
       margin-right: 2rem;
       i {
         position: absolute;
+      }
+
+      i:hover {
+        cursor: pointer;
       }
 
       i.fa-solid {
@@ -42,20 +48,51 @@
     padding: 1rem;
 
     p {
+      padding-left: 3rem;
       margin: 0;
     }
   }
 
   .tags {
     padding-bottom: 1rem;
+
+    .badge {
+      background-color: rgb(80, 87, 129);
+    }
+    .add-tag {
+      background-color: rgb(144, 156, 224);
+    }
+  }
+  .badge:hover {
+    cursor: pointer;
   }
 
   footer {
     display:flex;
     justify-content: space-between;
+    position: relative;
+
+    .comment-dropdown {
+      i:hover {
+        cursor: pointer;
+      }
+    }
 
     .comments {
       align-items: center;
+    }
+    .stars {
+      position: absolute;
+      right: 0;
+
+      i:hover {
+        cursor: pointer;
+      }
+
+      i.fa-solid {
+        visibility: hidden;
+        color: gold;
+      }
     }
   }
 }
@@ -68,6 +105,8 @@
   background-color: white;
   padding: 1rem;
   display:none;
+  border-radius: 0.5rem;
+  margin-top:-1rem;
 
   h3 {
     font-size: 1.5rem;
@@ -75,7 +114,7 @@
 
   div {
     padding-top: 1rem;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(80, 87, 129);
   }
   p {
     padding-left: 3rem;
@@ -86,5 +125,10 @@
     justify-content: right;
     border-bottom:none;
     margin-top: 1rem;
+
+    .new-comment-button {
+      background-color: rgb(144, 156, 224);
+      margin-top: 0.5rem;
+    }
   }
 }
