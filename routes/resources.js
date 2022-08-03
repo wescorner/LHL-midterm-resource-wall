@@ -12,16 +12,18 @@ module.exports = (db) => {
   //View Resources
   router.get("/", (req, res) => {
     const input = req.query.input;
-    queryParams = [];
+    queryParams = [req.session.user_id];
     queryString = `
-      SELECT resources.*, tag
+      SELECT resources.*, tag, rating
       FROM resources
-      LEFT JOIN tags ON resources.id = resource_id
-      GROUP BY resources.id, tag
+      LEFT JOIN tags ON resources.id = tags.resource_id
+      FULL OUTER JOIN (SELECT * FROM ratings WHERE user_id = $1) AS ratings
+      ON resources.id = ratings.resource_id
+      GROUP BY resources.id, tag, rating
     `;
     if (input) {
       queryParams.push(`%${input}%`);
-      queryString += `HAVING tag LIKE $1`;
+      queryString += `HAVING tag LIKE $2`;
     }
     queryString += `ORDER BY resources.id;`;
     db.query(queryString, queryParams)
@@ -32,6 +34,7 @@ module.exports = (db) => {
           titles: [],
           descriptions: [],
           urls: [],
+          ratings: [],
           tags: {},
           user: req.session.user_id,
         };
@@ -44,7 +47,9 @@ module.exports = (db) => {
           templateVars.titles.push(i.title);
           templateVars.descriptions.push(i.description);
           templateVars.urls.push(i.url);
+          templateVars.ratings.push(i.rating);
         });
+        console.log(templateVars);
         res.render("index", templateVars);
       })
       .catch((err) => {
