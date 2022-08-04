@@ -29,7 +29,7 @@ module.exports = (db) => {
     db.query(queryString, queryParams)
       .then((data) => {
         const resources = data.rows;
-        templateVars = {
+        const templateVars = {
           ids: [],
           titles: [],
           descriptions: [],
@@ -100,7 +100,7 @@ module.exports = (db) => {
       .then((data) => {
         const resources = data.rows;
         console.log(resources);
-        templateVars = {
+        const templateVars = {
           owned: {
             ids: [],
             titles: [],

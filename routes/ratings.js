@@ -9,6 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Add rating
   router.post("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may give a rating");
@@ -30,6 +31,8 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Remove Rating
   router.delete("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may delete a rating");
@@ -46,6 +49,25 @@ module.exports = (db) => {
         const ratings = data.rows;
         console.log(ratings);
         res.send(`deleted rating!`);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  //Average Rating
+  router.get("/average/:id", (req, res) => {
+    db.query(
+      `
+      SELECT AVG(rating)
+      FROM ratings
+      WHERE resource_id = $1;
+      `,
+      [req.params.id]
+    )
+      .then((data) => {
+        const ratings = data.rows[0];
+        res.send(String(Math.round(ratings.avg * 10) / 10));
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
