@@ -131,6 +131,7 @@ module.exports = (db) => {
             templateVars.owned.descriptions.push(i.description);
             templateVars.owned.urls.push(i.url);
             templateVars.owned.ratings.push(i.rating);
+            templateVars.owned.tags = [...new Set(templateVars.owned.tags[i])];
           } else {
             templateVars.liked.tags[i.id]
               ? templateVars.liked.tags[i.id].push(i.tag)
@@ -141,9 +142,11 @@ module.exports = (db) => {
             templateVars.liked.descriptions.push(i.description);
             templateVars.liked.urls.push(i.url);
             templateVars.owned.ratings.push(i.rating);
+            templateVars.liked.tags = [...new Set(templateVars.liked.tags[i])];
           }
         });
         console.log(templateVars);
+        console.log(templateVars.liked.tags);
         res.render("myresources", templateVars);
       })
       .catch((err) => {
