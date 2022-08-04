@@ -6,6 +6,13 @@ $(document).ready(function() {
     mouseenter: function () {
       const $regularStarContainer = $(this).parent();
       const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
+
+      $solidStarContainer.children('.1star').css('visibility', 'hidden');
+      $solidStarContainer.children('.2star').css('visibility', 'hidden');
+      $solidStarContainer.children('.3star').css('visibility', 'hidden');
+      $solidStarContainer.children('.4star').css('visibility', 'hidden');
+      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+
       if ($(this).attr('class').includes('1star')) {
         $solidStarContainer.children('.1star').css('visibility','visible');
       }
@@ -68,44 +75,59 @@ $(document).ready(function() {
       .then(function() {
         console.log('rated');
       });
+    },
+    mouseleave: function () {
+      const $solidStarContainer = $(this).parent().parent().children('.solid-stars');
+      console.log($solidStarContainer.attr('value'));
+      if ($solidStarContainer.attr('value') === '5') {
+        $solidStarContainer.children('.1star').css('visibility', 'visible');
+        $solidStarContainer.children('.2star').css('visibility', 'visible');
+        $solidStarContainer.children('.3star').css('visibility', 'visible');
+        $solidStarContainer.children('.4star').css('visibility', 'visible');
+        $solidStarContainer.children('.5star').css('visibility', 'visible');
+      }
+      else if ($solidStarContainer.attr('value') === '4') {
+        $solidStarContainer.children('.1star').css('visibility', 'visible');
+        $solidStarContainer.children('.2star').css('visibility', 'visible');
+        $solidStarContainer.children('.3star').css('visibility', 'visible');
+        $solidStarContainer.children('.4star').css('visibility', 'visible');
+        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      }
+      else if ($solidStarContainer.attr('value') === '3') {
+        $solidStarContainer.children('.1star').css('visibility', 'visible');
+        $solidStarContainer.children('.2star').css('visibility', 'visible');
+        $solidStarContainer.children('.3star').css('visibility', 'visible');
+        $solidStarContainer.children('.4star').css('visibility', 'hidden');
+        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      }
+      else if ($solidStarContainer.attr('value') === '2') {
+        $solidStarContainer.children('.1star').css('visibility', 'visible');
+        $solidStarContainer.children('.2star').css('visibility', 'visible');
+        $solidStarContainer.children('.3star').css('visibility', 'hidden');
+        $solidStarContainer.children('.4star').css('visibility', 'hidden');
+        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      }
+      else if ($solidStarContainer.attr('value') === '1') {
+        $solidStarContainer.children('.1star').css('visibility', 'visible');
+        $solidStarContainer.children('.2star').css('visibility', 'hidden');
+        $solidStarContainer.children('.3star').css('visibility', 'hidden');
+        $solidStarContainer.children('.4star').css('visibility', 'hidden');
+        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      } else {
+        $solidStarContainer.children('.1star').css('visibility', 'hidden');
+        $solidStarContainer.children('.2star').css('visibility', 'hidden');
+        $solidStarContainer.children('.3star').css('visibility', 'hidden');
+        $solidStarContainer.children('.4star').css('visibility', 'hidden');
+        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      }
     }
   });
-
-$('.stars').on({
-  mouseleave: function () {
-    $solidStarContainer = $(this).parent().find('.solid-stars');
-    if ($solidStarContainer.attr('value') === '0') {
-      $solidStarContainer.children('.1star').css('visibility', 'hidden');
-      $solidStarContainer.children('.2star').css('visibility', 'hidden');
-      $solidStarContainer.children('.3star').css('visibility', 'hidden');
-      $solidStarContainer.children('.4star').css('visibility', 'hidden');
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
-    }
-    if ($solidStarContainer.attr('value') === '1') {
-      $solidStarContainer.children('.2star').css('visibility', 'hidden');
-      $solidStarContainer.children('.3star').css('visibility', 'hidden');
-      $solidStarContainer.children('.4star').css('visibility', 'hidden');
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
-    }
-    if ($solidStarContainer.attr('value') === '2') {
-      $solidStarContainer.children('.3star').css('visibility', 'hidden');
-      $solidStarContainer.children('.4star').css('visibility', 'hidden');
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
-    }
-    if ($solidStarContainer.attr('value') === '3') {
-      $solidStarContainer.children('.4star').css('visibility', 'hidden');
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
-    }
-    if ($solidStarContainer.attr('value') === '4') {
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
-    }
-  }
-});
 
   //LIKES
   $('.likes').on({
     mouseenter: function () {
       const $like = $(this)
+      console.log($(this));
       if (!$like.children('.fa-solid').length) {
         $like.append(`<i class="fa-solid fa-heart"></i>`)
       }
@@ -131,7 +153,12 @@ $('.stars').on({
     },
     mouseleave: function () {
       const $like = $(this)
-      $like.children('.fa-solid').remove();
+      if ($like.children('.fa-solid').attr('value') !== 'liked') {
+        $like.children('.fa-solid').remove();
+        $like.children('.fa-regular').css('visibility','visible');
+      } else {
+        $like.children('.fa-regular').css('visibility','hidden');
+      }
     }
   });
   const likeResource = function ($resource) {

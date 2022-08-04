@@ -140,7 +140,7 @@ module.exports = (db) => {
             templateVars.liked.titles.push(i.title);
             templateVars.liked.descriptions.push(i.description);
             templateVars.liked.urls.push(i.url);
-            templateVars.owned.ratings.push(i.rating);
+            templateVars.liked.ratings.push(i.rating);
           }
         });
         console.log(templateVars);

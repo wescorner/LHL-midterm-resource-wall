@@ -49,27 +49,28 @@ $(document).ready(function() {
     $('.overlay').css('visibility', 'hidden');
     $('.add-resource-wrapper').css('display','none');
   }
-    //LOGOUT BUTTON
-    const startLogoutButton = function () {
-      $('#logout-button').on('click', function () {
-        console.log('test');
-        $.post('http://localhost:8080/api/logout')
-        .then(function() {
-          $navbar = $('.nav-options');
-          $navbar.children().remove();
-          $navbar.append(`
-            <form>
-              <button type="button" class="btn btn-dark" id ='register'>Register</button>
-            </form>
-            <form>
-              <button type="button" class="btn btn-dark" id ='login'>Login</button>
-            </form>
-          `);
-          startLoginButton();
-          startRegisterButton();
-        });
-      })
-    }
+  //LOGOUT BUTTON
+  const startLogoutButton = function () {
+    $('#logout-button').on('click', function () {
+      console.log('test');
+      $.post('http://localhost:8080/api/logout')
+      .then(function() {
+        $navbar = $('.nav-options');
+        $navbar.children().remove();
+        $navbar.append(`
+          <form>
+            <button type="button" class="btn btn-dark" id ='register'>Register</button>
+          </form>
+          <form>
+            <button type="button" class="btn btn-dark" id ='login'>Login</button>
+          </form>
+        `);
+        window.location.href = "/api/resources";
+        startLoginButton();
+        startRegisterButton();
+      });
+    })
+  }
     startLogoutButton();
 
     //LOGIN BUTTON
@@ -130,4 +131,25 @@ $(document).ready(function() {
 
       $('#reset').submit();
     })
+
+  //REGISTER BUTTON
+  $('#register-button').on('click',function () {
+    console.log('clicked register');
+    const name = $(this).parent().siblings('#register-name').val();
+    const email = $(this).parent().siblings('#register-email').val();
+    const password = $(this).parent().siblings('#register-password').val();
+
+    if (!name) {
+
+    } else if (!email) {
+
+    } else if (!password) {
+
+    } else {
+      $.post('http://localhost:8080/api/users', {name: name, email:email, password:password})
+      .then(function () {
+        window.location.href = "/api/resources";
+      });
+    }
+  });
 });

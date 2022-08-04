@@ -37,12 +37,12 @@
               <i class="fa-regular fa-heart"></i>
             </div>
           </header>
-  
+
           <section class="title-description">
             <h2><%=owned.titles[i]%></h2>
             <p><%=owned.descriptions[i]%></p>
           </section>
-  
+
           <section class="tags">
             <label>
               <% for (const tag of owned.tags[owned.ids[i]]) { %>
@@ -51,7 +51,7 @@
               <span class="badge bg-secondary add-tag">+</span>
             </label>
           </section>
-  
+
           <footer>
             <div class='comment-dropdown'>
               <label>Comments </label>
@@ -60,12 +60,21 @@
             <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
               <button class="btn btn-primary" type="submit">Delete Resource</button>
             </form>
-            <div class="stars" value="<%=owned.ratings[i]%>">
-              <i class="fa-regular fa-star 1star"></i>
-              <i class="fa-regular fa-star 2star"></i>
-              <i class="fa-regular fa-star 3star"></i>
-              <i class="fa-regular fa-star 4star"></i>
-              <i class="fa-regular fa-star 5star"></i>
+            <div value="<%=owned.ratings[i]%>" class="stars solid-stars">
+              <%  for(let count = 1; count <= 5; count++) { %>
+                <% if (owned.ratings[i] >= count) { %>
+                  <i style="visibility: visible;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
+                <% } else { %>
+                  <i style="visibility: hidden;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
+                <% } %>
+              <% } %>
+            </div>
+            <div class="stars">
+              <i class="fa-regular fa-star 1star starsIcons"></i>
+              <i class="fa-regular fa-star 2star starsIcons"></i>
+              <i class="fa-regular fa-star 3star starsIcons"></i>
+              <i class="fa-regular fa-star 4star starsIcons"></i>
+              <i class="fa-regular fa-star 5star starsIcons"></i>
             </div>
           </footer>
         </div>
@@ -88,7 +97,8 @@
           <a href="<%=liked.urls[i]%>"><%=liked.urls[i]%></a>
           <div value='true' class="likes">
             <!-- <form action="/api/likes/<%=liked.ids[i]%>?_method=DELETE"> -->
-              <i class="fa-solid fa-heart" type="submit"></i>
+              <i value="liked" class="fa-solid fa-heart" type="submit"></i>
+              <i class="fa-regular fa-heart" style="visibility:hidden" type="submit"></i>
             <!-- </form> -->
           </div>
         </header>
@@ -112,12 +122,21 @@
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
-          <div class="stars" value="<%=liked.ratings[i]%>">
-            <i class="fa-regular fa-star 1star"></i>
-            <i class="fa-regular fa-star 2star"></i>
-            <i class="fa-regular fa-star 3star"></i>
-            <i class="fa-regular fa-star 4star"></i>
-            <i class="fa-regular fa-star 5star"></i>
+          <div value="<%=liked.ratings[i]%>" class="stars solid-stars">
+            <%  for(let count = 1; count <= 5; count++) { %>
+              <% if (liked.ratings[i] >= count) { %>
+                <i style="visibility: visible;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
+              <% } else { %>
+                <i style="visibility: hidden;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
+              <% } %>
+            <% } %>
+          </div>
+          <div class="stars regular-stars">
+            <i class="fa-regular fa-star 1star starsIcons"></i>
+            <i class="fa-regular fa-star 2star starsIcons"></i>
+            <i class="fa-regular fa-star 3star starsIcons"></i>
+            <i class="fa-regular fa-star 4star starsIcons"></i>
+            <i class="fa-regular fa-star 5star starsIcons"></i>
           </div>
         </footer>
       </div>
@@ -162,28 +181,28 @@
     </section>
 
     <!--ADD RESOURCE -->
-    <section class="add-resource-wrapper">
+    <section class="add-resource-wrapper text-white">
       <form>
-        <h2>Add Resource</h2>
+        <h2 class="bg-dark">Add Resource</h2>
         <input name="url" type="text" class="form-control" placeholder="url" aria-label="Username" aria-describedby="basic-addon1">
         <input name="title" type="text" class="form-control" placeholder="title" aria-label="Password" aria-describedby="basic-addon1">
         <textarea name="description" class="form-control" placeholder="description" aria-label="With textarea"></textarea>
         <div id="resource-button">
           <button type="button" class="btn btn-success" id="add-resource-button">Add Resource</button>
+          <button type="button" class="btn btn-dark close">Close</button>
         </div>
-        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
 
     <!--ADD TAG-->
-    <section class="add-tag-wrapper">
+    <section class="add-tag-wrapper text-white">
       <form>
-        <h2>Add Tag</h2>
+        <h2 class="bg-dark">Add Tag</h2>
         <input name="tag" type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1">
         <div id="tag-button">
           <button type="button" class="btn btn-success" id="add-tag-button">Add Tag</button>
+          <button type="button" class="btn btn-dark close">Close</button>
         </div>
-        <div class="close"><button type="button" class="btn btn-dark">Close</button></div>
       </form>
     </section>
   </section>
