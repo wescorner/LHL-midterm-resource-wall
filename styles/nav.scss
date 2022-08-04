@@ -28,3 +28,13 @@ nav {
     }
   }
 }
+
+@media only screen and (max-width: 650px) {
+  nav {
+    height: 140px;
+    padding: 1rem;
+    button {
+      margin: 0 0.2rem 0 0.2rem;
+    }
+  }
+}
