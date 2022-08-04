@@ -7,36 +7,16 @@ $(document).ready(function() {
       const $regularStarContainer = $(this).parent();
       const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
 
-      $solidStarContainer.children('.1star').css('visibility', 'hidden');
-      $solidStarContainer.children('.2star').css('visibility', 'hidden');
-      $solidStarContainer.children('.3star').css('visibility', 'hidden');
-      $solidStarContainer.children('.4star').css('visibility', 'hidden');
-      $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      for(let i = 0; i <= 5; i++) {
+        $solidStarContainer.children(`.${i}star`).css('visibility', 'hidden');
+      }
 
-      if ($(this).attr('class').includes('1star')) {
-        $solidStarContainer.children('.1star').css('visibility','visible');
-      }
-      if ($(this).attr('class').includes('2star')) {
-        $solidStarContainer.children('.1star').css('visibility','visible');
-        $solidStarContainer.children('.2star').css('visibility','visible');
-      }
-      if ($(this).attr('class').includes('3star')) {
-        $solidStarContainer.children('.1star').css('visibility','visible');
-        $solidStarContainer.children('.2star').css('visibility','visible');
-        $solidStarContainer.children('.3star').css('visibility','visible');
-      }
-      if ($(this).attr('class').includes('4star')) {
-        $solidStarContainer.children('.1star').css('visibility','visible');
-        $solidStarContainer.children('.2star').css('visibility','visible');
-        $solidStarContainer.children('.3star').css('visibility','visible');
-        $solidStarContainer.children('.4star').css('visibility','visible');
-      }
-      if ($(this).attr('class').includes('5star')) {
-        $solidStarContainer.children('.1star').css('visibility','visible');
-        $solidStarContainer.children('.2star').css('visibility','visible');
-        $solidStarContainer.children('.3star').css('visibility','visible');
-        $solidStarContainer.children('.4star').css('visibility','visible');
-        $solidStarContainer.children('.5star').css('visibility','visible');
+      for (let i = 0; i <=5; i++) {
+        if ($(this).attr('class').includes(`${i}star`)) {
+          for (j = 1; j <= i; j++) {
+            $solidStarContainer.children(`.${j}star`).css('visibility','visible');
+          }
+        }
       }
     },
     //On MOUSE CLICK AJAX DELETE previous rating and POST new rating
@@ -78,46 +58,12 @@ $(document).ready(function() {
     //On MOUSE LEAVE hide / display stars based on resource rating
     mouseleave: function () {
       const $solidStarContainer = $(this).parent().parent().children('.solid-stars');
-      if ($solidStarContainer.attr('value') === '5') {
-        $solidStarContainer.children('.1star').css('visibility', 'visible');
-        $solidStarContainer.children('.2star').css('visibility', 'visible');
-        $solidStarContainer.children('.3star').css('visibility', 'visible');
-        $solidStarContainer.children('.4star').css('visibility', 'visible');
-        $solidStarContainer.children('.5star').css('visibility', 'visible');
-      }
-      else if ($solidStarContainer.attr('value') === '4') {
-        $solidStarContainer.children('.1star').css('visibility', 'visible');
-        $solidStarContainer.children('.2star').css('visibility', 'visible');
-        $solidStarContainer.children('.3star').css('visibility', 'visible');
-        $solidStarContainer.children('.4star').css('visibility', 'visible');
-        $solidStarContainer.children('.5star').css('visibility', 'hidden');
-      }
-      else if ($solidStarContainer.attr('value') === '3') {
-        $solidStarContainer.children('.1star').css('visibility', 'visible');
-        $solidStarContainer.children('.2star').css('visibility', 'visible');
-        $solidStarContainer.children('.3star').css('visibility', 'visible');
-        $solidStarContainer.children('.4star').css('visibility', 'hidden');
-        $solidStarContainer.children('.5star').css('visibility', 'hidden');
-      }
-      else if ($solidStarContainer.attr('value') === '2') {
-        $solidStarContainer.children('.1star').css('visibility', 'visible');
-        $solidStarContainer.children('.2star').css('visibility', 'visible');
-        $solidStarContainer.children('.3star').css('visibility', 'hidden');
-        $solidStarContainer.children('.4star').css('visibility', 'hidden');
-        $solidStarContainer.children('.5star').css('visibility', 'hidden');
-      }
-      else if ($solidStarContainer.attr('value') === '1') {
-        $solidStarContainer.children('.1star').css('visibility', 'visible');
-        $solidStarContainer.children('.2star').css('visibility', 'hidden');
-        $solidStarContainer.children('.3star').css('visibility', 'hidden');
-        $solidStarContainer.children('.4star').css('visibility', 'hidden');
-        $solidStarContainer.children('.5star').css('visibility', 'hidden');
-      } else {
-        $solidStarContainer.children('.1star').css('visibility', 'hidden');
-        $solidStarContainer.children('.2star').css('visibility', 'hidden');
-        $solidStarContainer.children('.3star').css('visibility', 'hidden');
-        $solidStarContainer.children('.4star').css('visibility', 'hidden');
-        $solidStarContainer.children('.5star').css('visibility', 'hidden');
+      for (let i = 1; i <= 5; i++) {
+        if ($solidStarContainer.attr('value') >= i) {
+          $solidStarContainer.children(`.${i}star`).css('visibility', 'visible');
+        } else {
+          $solidStarContainer.children(`.${i}star`).css('visibility', 'hidden');
+        }
       }
     }
   });
@@ -250,8 +196,10 @@ $(document).ready(function() {
     $('.new-comment-button').on('click',function () {
       $resource = $(this).parent().parent();
       const data = $(this).siblings().val();
-
-      $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
+      if (!data) {
+        alert("Comments can't be empty!")
+      } else {
+        $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
       .then(function() {
         $.ajax(`http://localhost:8080/api/comments/${$resource.attr('id')}`)
           .then(function (commentsObj) {
@@ -273,6 +221,7 @@ $(document).ready(function() {
             startNewCommentButton();
           });
       });
+      }
     });
   };
   startNewCommentButton();
