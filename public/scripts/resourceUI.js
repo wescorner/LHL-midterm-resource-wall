@@ -1,8 +1,8 @@
+//RESOURCE PANEL SCRIPTS
 $(document).ready(function() {
-
-  //RATINGS
-
+  //STAR RATINGS
   $('.starsIcons').on({
+    //On MOUSE ENTER display solid star for current star and previous stars
     mouseenter: function () {
       const $regularStarContainer = $(this).parent();
       const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
@@ -39,6 +39,7 @@ $(document).ready(function() {
         $solidStarContainer.children('.5star').css('visibility','visible');
       }
     },
+    //On MOUSE CLICK AJAX DELETE previous rating and POST new rating
     click: function() {
       const $regularStarContainer = $(this).parent();
       const $solidStarContainer = $regularStarContainer.siblings('.solid-stars');
@@ -67,18 +68,16 @@ $(document).ready(function() {
       resource_id = $regularStarContainer.parent().parent().siblings().attr('id');
       $.ajax(`http://localhost:8080/api/ratings/${resource_id}`, {type: 'DELETE', rating: rating})
       .then(function() {
-        console.log('deleted rating');
       });
 
 
       $.post(`http://localhost:8080/api/ratings/${resource_id}`, {rating: rating})
       .then(function() {
-        console.log('rated');
       });
     },
+    //On MOUSE LEAVE hide / display stars based on resource rating
     mouseleave: function () {
       const $solidStarContainer = $(this).parent().parent().children('.solid-stars');
-      console.log($solidStarContainer.attr('value'));
       if ($solidStarContainer.attr('value') === '5') {
         $solidStarContainer.children('.1star').css('visibility', 'visible');
         $solidStarContainer.children('.2star').css('visibility', 'visible');
@@ -125,19 +124,19 @@ $(document).ready(function() {
 
   //LIKES
   $('.likes').on({
+    //On MOUSE ENTER display filled in heart if missing
     mouseenter: function () {
       const $like = $(this)
-      console.log($(this));
       if (!$like.children('.fa-solid').length) {
         $like.append(`<i class="fa-solid fa-heart"></i>`)
       }
     },
     //Toggle Like
+    //On CLICK check state (liked or unliked) and AJAX DELETE OR POST accordingly
     click: function () {
       const $like = $(this)
       if ($like.attr('value') === 'true') {
         unlikeResource($like);
-        console.log('clicked')
         $like.find(".fa-solid").remove();
         $like.attr('value', 'false');
         $like.on('mouseleave', function () {
@@ -149,8 +148,8 @@ $(document).ready(function() {
         $like.attr('value', 'true');
         $like.off('mouseleave');
       }
-      console.log($like.attr('value'));
     },
+    //On MOUSE LEAVE display empty or full heart icon based on liked state
     mouseleave: function () {
       const $like = $(this)
       if ($like.children('.fa-solid').attr('value') !== 'liked') {
@@ -161,25 +160,25 @@ $(document).ready(function() {
       }
     }
   });
+  //Perform AJAX POST to api/likes/id
   const likeResource = function ($resource) {
     $resource_id = $resource.parent().parent().siblings()
 
     $.post(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`)
       .then(function() {
-        console.log('liked');
       });
   }
+  //Perform AJAX DELETE to api/likes/id
   const unlikeResource = function ($resource) {
     $resource_id = $resource.parent().parent().siblings()
 
     $.ajax(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`, {type: 'DELETE'})
       .then(function() {
-        console.log('unliked');
         location.reload();
       });
   }
 
-  //ADD TAG BUTTON
+  //ADD TAG BUTTON (resource panel)
   let $currentResource;
   $('.add-tag').click(function () {
     $currentResource = $(this).parent().parent().parent().siblings();
@@ -187,7 +186,7 @@ $(document).ready(function() {
     $('.add-tag-wrapper').slideDown('slow');
   })
 
-  //ADD TAG FORM SUBMISSION
+  //ADD TAG BUTTON (form)
   $('#add-tag-button').on('click', function () {
     const tag = $(this).parent().prev().val();
     $.post(`http://localhost:8080/api/tags/${$currentResource.attr('id')}`, {tag: tag})
@@ -205,9 +204,9 @@ $(document).ready(function() {
 
 
     //COMMENTS DROPDOWN
+    //Expand / retract dropdown menu and load comments
   $('.comment-dropdown').click(function () {
     const $dropdown = $(this).parent().parent().siblings();
-    console.log($dropdown);
     if ($(this).children('.fa-angle-down').length) {
       loadComments($dropdown.attr('id'), $dropdown);
       $(this).children('.fa-angle-down').remove();
@@ -219,6 +218,8 @@ $(document).ready(function() {
     }
   })
 
+  //AJAX GET request to api/comments/id
+  //Append all comments to dropdown menu
   const loadComments = function (id, $menu) {
     const $dropdown = $menu;
     $.ajax(`http://localhost:8080/api/comments/${id}`)
@@ -242,7 +243,9 @@ $(document).ready(function() {
       });
   }
 
-    //NEW COMMENT
+  //NEW COMMENT BUTTON
+  //AJAX POST request to api/comments/id
+  //AJAX GET request to api/comments/id
   const startNewCommentButton = function () {
     $('.new-comment-button').on('click',function () {
       $resource = $(this).parent().parent();
