@@ -3,14 +3,21 @@
   <head>
     <title>Profile</title>
 
+    <!--EXTERNAL CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
+    <!--INTERNAL CSS-->
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
@@ -19,19 +26,21 @@
     <link rel="stylesheet" href="/styles/add-resource.css" type="text/css" />
     <link rel="stylesheet" href="/styles/register.css" type="text/css" />
     <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    />
 
+    <!--JQUERY-->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+    <!--JAVASCRIPT-->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/resourceUI.js"></script>
     <script type="text/javascript" src="/scripts/profileImage.js"></script>
   </head>
 
   <body>
+    <!--NAV BAR EJS-->
     <%- include('partials/_navbar') %>
+
+    <!--MAIN PAGE CONTAINER (PROFILE PANEL)-->
     <main id="profile-main">
       <div class="container rounded text-white bg-dark mt-5 mb-5">
         <div class="row">
@@ -74,9 +83,10 @@
       </div>
     </main>
 
-    <!--OVERLAY-->
+    <!--POPUP FORMS-->
+    <!--TRANSLUCENT OVERLAY-->
   <section class="overlay">
-    <!--ADD RESOURCE -->
+    <!--ADD RESOURCE FORM-->
     <section class="add-resource-wrapper text-white">
       <form>
         <h2 class="bg-dark">Add Resource</h2>
