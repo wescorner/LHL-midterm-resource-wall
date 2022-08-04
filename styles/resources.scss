@@ -77,6 +77,10 @@
         cursor: pointer;
       }
     }
+    .resource-rating {
+      margin-top:-1.5rem;
+      margin-right: -0.2rem;
+    }
 
     .comments {
       align-items: center;
@@ -84,6 +88,10 @@
     .stars {
       position: absolute;
       right: 0;
+
+      i {
+        margin: -0.2rem;
+      }
 
       i:hover {
         cursor: pointer;

@@ -229,7 +229,7 @@ $(document).ready(function() {
           });
         } else {
           for (const i in commentsObj.comments) {
-            $dropdown.prepend(`
+            $dropdown.children('form').before(`
             <div>
               <h3>${escape(commentsObj.user_names[i])}</h3>
               <p>${escape(commentsObj.comments[i])}</p>
@@ -243,24 +243,36 @@ $(document).ready(function() {
   }
 
     //NEW COMMENT
-  $('.new-comment-button').on('click',function () {
-    $resource = $(this).parent().parent();
-    const data = $(this).siblings().val();
+  const startNewCommentButton = function () {
+    $('.new-comment-button').on('click',function () {
+      $resource = $(this).parent().parent();
+      const data = $(this).siblings().val();
 
-    $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
-    .then(function(comment) {
-      $.ajax(`http://localhost:8080/api/comments/${$resource.attr('id')}`)
-        .then(function (commentsObj) {
-          $resource.children('form').before(`
-            <div>
-              <h3>${escape(commentsObj.user_names[0])}</h3>
-              <p>${escape(commentsObj.comments[0])}</p>
-            </div>
-          `);
-        });
-      $resource.slideDown('fast');
+      $.post(`http://localhost:8080/api/comments/${$resource.attr('id')}`, {comment: data})
+      .then(function() {
+        $.ajax(`http://localhost:8080/api/comments/${$resource.attr('id')}`)
+          .then(function (commentsObj) {
+            $resource.children().remove();
+            for (const i in commentsObj.comments) {
+              $resource.append(`
+              <div>
+                <h3>${escape(commentsObj.user_names[i])}</h3>
+                <p>${escape(commentsObj.comments[i])}</p>
+              </div>
+              `)
+            }
+            $resource.append(`
+              <form class="new-comment">
+                <textarea name="comment" class="form-control" placeholder="comment" aria-label="With textarea"></textarea>
+                <button type="button" class="btn new-comment-button">Comment</button>
+              </form>
+            `)
+            startNewCommentButton();
+          });
+      });
     });
-  });
+  };
+  startNewCommentButton();
 
   //Convert HTML to a string
   const escape = function(str) {

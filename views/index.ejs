@@ -4,9 +4,13 @@
 <head>
   <title>Resource Wall</title>
 
+  <!--EXTERNAL CSS-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
+  <!--INTERNAL CSS-->
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
@@ -15,16 +19,20 @@
   <link rel="stylesheet" href="/styles/add-resource.css" type="text/css" />
   <link rel="stylesheet" href="/styles/register.css" type="text/css" />
   <link rel="stylesheet" href="/styles/add-tag.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+  <!--JQUERY-->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+  <!--JAVASCRIPT-->
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/resourceUI.js"></script>
 </head>
 
 <body>
+  <!--NAV BAR EJS-->
   <%- include('partials/_navbar') %>
 
+  <!--MAIN PAGE CONTAINER (SEARCH BAR AND RESOURCES)-->
   <main>
     <!--SEARCH BAR-->
     <form id='search-bar' action="/api/resources" method="GET">
@@ -34,7 +42,7 @@
       </div>
     </form>
 
-
+    <!--PRINT ALL RESOURCES-->
     <% for(const i in titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
@@ -53,6 +61,7 @@
 
         <section class="tags">
           <label>
+            <!--PRINT ALL TAGS-->
             <% for (const tag of tags[ids[i]]) { %>
               <span class="badge"><%=tag%></span>
             <% } %>
@@ -65,7 +74,12 @@
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
           </div>
+          <div class="resource-rating">
+            <label>5/5</label>
+            <i class="fa-solid fa-star"></i>
+          </div>
           <div value="<%=ratings[i]%>" class="stars solid-stars">
+            <!--SHOW APPROPRIATE STAR RATINGS ON LOAD-->
             <%  for(let count = 1; count <= 5; count++) { %>
               <% if (ratings[i] >= count) { %>
                 <i style="visibility: visible;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
@@ -93,10 +107,10 @@
     <% } %>
   </main>
 
-
-  <!--OVERLAY-->
+  <!--POPUP FORMS-->
+  <!--TRANSLUCENT OVERLAY-->
   <section class="overlay">
-    <!--LOGIN -->
+    <!--LOGIN FORM -->
     <section id="login-wrapper" class="login-wrapper text-white">
       <form>
         <h2 class="bg-dark" id="login-header">Login</h2>
@@ -109,7 +123,7 @@
       </form>
     </section>
 
-    <!--REGISTER -->
+    <!--REGISTER FORM -->
     <section class="register-wrapper text-white">
       <form action="/api/users" method="POST">
         <h2 class="bg-dark">REGISTER</h2>
@@ -123,7 +137,7 @@
       </form>
     </section>
 
-    <!--ADD RESOURCE -->
+    <!--ADD RESOURCE FORM-->
     <section class="add-resource-wrapper text-white">
       <form>
         <h2 class="bg-dark">Add Resource</h2>
@@ -137,7 +151,7 @@
       </form>
     </section>
 
-    <!--ADD TAG-->
+    <!--ADD TAG FORM-->
     <section class="add-tag-wrapper text-white">
       <form>
         <h2 class="bg-dark">Add Tag</h2>

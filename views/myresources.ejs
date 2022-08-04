@@ -3,10 +3,15 @@
 
 <head>
   <title>My Resources</title>
+
+  <!--EXTERNAL CSS-->
   <link rel="icon" type="image/x-icon" href="/images/favicon.svg"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+  <!--INTERNAL CSS-->
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
@@ -15,27 +20,33 @@
   <link rel="stylesheet" href="/styles/add-resource.css" type="text/css" />
   <link rel="stylesheet" href="/styles/register.css" type="text/css" />
   <link rel="stylesheet" href="/styles/add-tag.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+  <!--JQUERY-->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+  <!--JAVASCRIPT-->
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/resourceUI.js"></script>
 </head>
 
 <body>
+  <!--NAV BAR EJS-->
   <%- include('partials/_navbar') %>
+
+  <!--MAIN PAGE CONTAINER (SEARCH BAR, OWNED RESOURCES AND LIKED RESOURCES)-->
   <main>
     <h1>Created Resources</h1>
 
+    <!--PRINT ALL OWNED RESOURCES-->
     <% for(const i in owned.titles) {%>
       <!--RESOURCE FRAME-->
       <section id="resource-wrapper">
         <div class="resource bg-dark text-white">
           <header>
             <a href="<%=owned.urls[i]%>"><%=owned.urls[i]%></a>
-            <div value='false' class="likes">
-              <i class="fa-regular fa-heart"></i>
-            </div>
+            <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
+              <button class="btn btn-danger" type="submit">Delete Resource</button>
+            </form>
           </header>
 
           <section class="title-description">
@@ -45,6 +56,7 @@
 
           <section class="tags">
             <label>
+              <!--PRINT ALL TAGS-->
               <% for (const tag of owned.tags[owned.ids[i]]) { %>
                 <span class="badge bg-secondary"><%=tag%></span>
               <% } %>
@@ -57,10 +69,8 @@
               <label>Comments </label>
               <i class="fa-solid fa-angle-down"></i>
             </div>
-            <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
-              <button class="btn btn-primary" type="submit">Delete Resource</button>
-            </form>
             <div value="<%=owned.ratings[i]%>" class="stars solid-stars">
+              <!--SHOW APPROPRIATE STAR RATINGS ON LOAD-->
               <%  for(let count = 1; count <= 5; count++) { %>
                 <% if (owned.ratings[i] >= count) { %>
                   <i style="visibility: visible;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
@@ -89,6 +99,7 @@
 
     <h1>Liked Resources</h1>
 
+    <!--PRINT ALL LIKED RESOURCES-->
     <% for(const i in liked.titles) {%>
     <!--RESOURCE FRAME-->
     <section id="resource-wrapper">
@@ -110,6 +121,7 @@
 
         <section class="tags">
           <label>
+            <!--PRINT ALL TAGS-->
             <% for (const tag of liked.tags[liked.ids[i]]) { %>
               <span class="badge bg-secondary"><%=tag%></span>
             <% } %>
@@ -123,6 +135,7 @@
             <i class="fa-solid fa-angle-down"></i>
           </div>
           <div value="<%=liked.ratings[i]%>" class="stars solid-stars">
+            <!--SHOW APPROPRIATE STAR RATINGS ON LOAD-->
             <%  for(let count = 1; count <= 5; count++) { %>
               <% if (liked.ratings[i] >= count) { %>
                 <i style="visibility: visible;" class="fa-solid fa-star <%=count%>star starsIcons"></i>
@@ -151,9 +164,10 @@
   </main>
 
 
-  <!--OVERLAY-->
+  <!--POPUP FORMS-->
+  <!--TRANSLUCENT OVERLAY-->
   <section class="overlay">
-    <!--LOGIN -->
+    <!--LOGIN FORM-->
     <section id="login-wrapper" class="login-wrapper">
       <form>
         <h2 id="login-header">Login</h2>
@@ -166,7 +180,7 @@
       </form>
     </section>
 
-    <!--REGISTER -->
+    <!--REGISTER FORM-->
     <section class="register-wrapper">
       <form action="/api/users" method="POST">
         <h2>REGISTER</h2>
@@ -180,7 +194,7 @@
       </form>
     </section>
 
-    <!--ADD RESOURCE -->
+    <!--ADD RESOURCE FORM-->
     <section class="add-resource-wrapper text-white">
       <form>
         <h2 class="bg-dark">Add Resource</h2>
@@ -194,7 +208,7 @@
       </form>
     </section>
 
-    <!--ADD TAG-->
+    <!--ADD TAG FORM-->
     <section class="add-tag-wrapper text-white">
       <form>
         <h2 class="bg-dark">Add Tag</h2>
