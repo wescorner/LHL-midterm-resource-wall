@@ -1,3 +1,4 @@
+const loadRatings = require('./app');
 //RESOURCE PANEL SCRIPTS
 $(document).ready(function() {
   //STAR RATINGS
@@ -53,6 +54,7 @@ $(document).ready(function() {
 
       $.post(`http://localhost:8080/api/ratings/${resource_id}`, {rating: rating})
       .then(function() {
+        loadRatings();
       });
     },
     //On MOUSE LEAVE hide / display stars based on resource rating

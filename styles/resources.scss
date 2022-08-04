@@ -73,6 +73,18 @@
     position: relative;
 
     .comment-dropdown {
+      i {
+        color: rgb(144, 156, 224);
+      }
+    }
+
+    .resource-rating {
+      i.fa-solid {
+        color: gold;
+      }
+    }
+
+    .comment-dropdown {
       i:hover {
         cursor: pointer;
       }
