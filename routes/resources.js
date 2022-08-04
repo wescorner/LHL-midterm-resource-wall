@@ -99,7 +99,7 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        console.log(resources);
+        // console.log(resources);
         const templateVars = {
           owned: {
             ids: [],
@@ -120,7 +120,6 @@ module.exports = (db) => {
           user: req.session.user_id,
         };
         resources.forEach((i) => {
-          console.log("i:", i);
           if (i.user_id === req.session.user_id) {
             templateVars.owned.tags[i.id]
               ? templateVars.owned.tags[i.id].push(i.tag)
@@ -131,7 +130,6 @@ module.exports = (db) => {
             templateVars.owned.descriptions.push(i.description);
             templateVars.owned.urls.push(i.url);
             templateVars.owned.ratings.push(i.rating);
-            templateVars.owned.tags = [...new Set(templateVars.owned.tags[i])];
           } else {
             templateVars.liked.tags[i.id]
               ? templateVars.liked.tags[i.id].push(i.tag)
@@ -142,9 +140,22 @@ module.exports = (db) => {
             templateVars.liked.descriptions.push(i.description);
             templateVars.liked.urls.push(i.url);
             templateVars.liked.ratings.push(i.rating);
-            templateVars.liked.tags = [...new Set(templateVars.liked.tags[i])];
           }
         });
+        for (const i in templateVars.owned.tags) {
+          templateVars.owned.tags[i] = templateVars.owned.tags[i].filter(
+            (item, pos) => {
+              return templateVars.owned.tags[i].indexOf(item) == pos;
+            }
+          );
+        }
+        for (const i in templateVars.liked.tags) {
+          templateVars.liked.tags[i] = templateVars.liked.tags[i].filter(
+            (item, pos) => {
+              return templateVars.liked.tags[i].indexOf(item) == pos;
+            }
+          );
+        }
         console.log(templateVars);
         console.log(templateVars.liked.tags);
         res.render("myresources", templateVars);
