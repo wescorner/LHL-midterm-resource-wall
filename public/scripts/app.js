@@ -1,7 +1,7 @@
-// Client facing scripts here
+// Client-side scripts
 $(document).ready(function() {
 
-  //LOGIN BUTTON
+  //START LOGIN BUTTON
   const startLoginButton = function () {
     $loginButton = $('#login');
     $loginButton.on('click', function () {
@@ -12,7 +12,7 @@ $(document).ready(function() {
   }
   startLoginButton();
 
-  //REGISTER BUTTON
+  //START REGISTER BUTTON
   const startRegisterButton = function () {
     $registerButton = $('#register');
     $registerButton.on('click', function () {
@@ -23,7 +23,7 @@ $(document).ready(function() {
   }
   startRegisterButton();
 
-  //ADD RESOURCE BUTTON
+  //START ADD RESOURCE BUTTON
   const startAddResourceButton = function () {
     $resourceButton = $('#add-resource');
     $resourceButton.on('click', function () {
@@ -34,7 +34,7 @@ $(document).ready(function() {
   }
   startAddResourceButton();
 
-  //CLOSE BUTTON
+  //CLOSE FORM BUTTON
   $closeButton = $('.close');
   $closeButton.on('click', function () {
     closeForms();
@@ -52,7 +52,6 @@ $(document).ready(function() {
   //LOGOUT BUTTON
   const startLogoutButton = function () {
     $('#logout-button').on('click', function () {
-      console.log('test');
       $.post('http://localhost:8080/api/logout')
       .then(function() {
         $navbar = $('.nav-options');
@@ -73,18 +72,16 @@ $(document).ready(function() {
   }
     startLogoutButton();
 
-    //LOGIN BUTTON
+    //LOGIN BUTTON (POPUP FORM)
+    //AJAX POST to /api/login using email and password INPUT FORM
     $('#login-button').on('click', function () {
       const email = $('#login-header').next().val();
       const password = $('#login-header').next().next().val();
       $.post('http://localhost:8080/api/login', {email: email, password: password})
       .then(function(user) {
-        console.log(user);
-        if (user != 'incorrect password' && user != 'user does not exist') {
+        if (user !== 'incorrect password' && user !== 'user does not exist') {
           $navbar = $('.nav-options');
           $navbar.children().remove();
-          console.log('-----------------------------');
-          console.log(user);
           $navbar.append(`
             <!--LOGGED IN-->
             <form>
@@ -106,45 +103,44 @@ $(document).ready(function() {
           startLogoutButton();
           startAddResourceButton();
         } else {
-          alert('error');
+          alert('Incorrect Login Information!');
         }
       });
     })
 
-    //ADD RESOURCE BUTTON
+    //ADD RESOURCE BUTTON (POPUP FORM)
+    //AJAX POST to create a resource using data from INPUT FORM
     $('#add-resource-button').on('click', function () {
       const description = $(this).parent().prev().val();
       const title = $(this).parent().prev().prev().val();
       const url = $(this).parent().prev().prev().prev().val();
-      console.log('test');
 
-      $.post('http://localhost:8080/api/resources', {url: url, title: title, description: description})
-      .then(function(user) {
-        console.log('created a resource');
-        closeForms();
-      });
+      if (!description || !title || !url) {
+        alert('Empty Creation Data!');
+      } else {
 
-      const pathname = window.location.pathname;
-      $(this).append(`
-        <form id="reset" style="visibility:hidden" action="http://localhost:8080${pathname}" method="GET"></form>
-      `)
+        $.post('http://localhost:8080/api/resources', {url: url, title: title, description: description})
+        .then(function(user) {
+          closeForms();
+        });
 
-      $('#reset').submit();
+        const pathname = window.location.pathname;
+        $(this).append(`
+          <form id="reset" style="visibility:hidden" action="http://localhost:8080${pathname}" method="GET"></form>
+        `)
+
+        $('#reset').submit();
+      }
     })
 
-  //REGISTER BUTTON
+  //REGISTER BUTTON (POPUP FORM)
   $('#register-button').on('click',function () {
-    console.log('clicked register');
     const name = $(this).parent().siblings('#register-name').val();
     const email = $(this).parent().siblings('#register-email').val();
     const password = $(this).parent().siblings('#register-password').val();
 
-    if (!name) {
-
-    } else if (!email) {
-
-    } else if (!password) {
-
+    if (!name || !email || !password) {
+      alert('Empty Registration Data!');
     } else {
       $.post('http://localhost:8080/api/users', {name: name, email:email, password:password})
       .then(function () {
