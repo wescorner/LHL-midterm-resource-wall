@@ -60,7 +60,7 @@ module.exports = (db) => {
   //Add Resource
   router.post("/", (req, res) => {
     if (!req.session.user_id) {
-      return res.send("only logged in users may create a resource");
+      return res.status(400).send("only logged in users may create a resource");
     }
     db.query(
       `
@@ -82,6 +82,9 @@ module.exports = (db) => {
 
   //My Resources
   router.get("/:id", (req, res) => {
+    if (req.session.user_id != req.params.id) {
+      return res.status(400).send("CAN ONLY VIEW YOUR OWN RESOURCES");
+    }
     db.query(
       `
       SELECT resources.*, tag, likes.user_id AS like, rating
@@ -131,7 +134,9 @@ module.exports = (db) => {
             templateVars.owned.descriptions.push(i.description);
             templateVars.owned.urls.push(i.url);
             templateVars.owned.ratings.push(i.rating);
-            templateVars.owned.tags = [...new Set(templateVars.owned.tags[i])];
+            templateVars.owned.tags[i] = [
+              ...new Set(templateVars.owned.tags[i]),
+            ];
           } else {
             templateVars.liked.tags[i.id]
               ? templateVars.liked.tags[i.id].push(i.tag)
@@ -141,8 +146,10 @@ module.exports = (db) => {
             templateVars.liked.titles.push(i.title);
             templateVars.liked.descriptions.push(i.description);
             templateVars.liked.urls.push(i.url);
-            templateVars.owned.ratings.push(i.rating);
-            templateVars.liked.tags = [...new Set(templateVars.liked.tags[i])];
+            templateVars.liked.ratings.push(i.rating);
+            templateVars.liked.tags[i] = [
+              ...new Set(templateVars.liked.tags[i]),
+            ];
           }
         });
         console.log(templateVars);
@@ -157,7 +164,10 @@ module.exports = (db) => {
   //Remove Resource
   router.delete("/:id", (req, res) => {
     if (!req.session.user_id) {
-      return res.send("only logged in users may create a resource");
+      return res.status(400).send("only logged in users may remove a resource");
+    }
+    if (req.session.user_id != req.params.id) {
+      return res.status(400).send("CANNOT REMOVE THAT RESOURCE");
     }
     db.query(
       `

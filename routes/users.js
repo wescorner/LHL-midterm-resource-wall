@@ -11,6 +11,12 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/:profile", (req, res) => {
+    console.log("profile: ", req.params.profile);
+    console.log("user:", req.session.user_id);
+    if (req.session.user_id != req.params.profile) {
+      return res.status(400).send("CANNOT ACCESS THAT PROFILE");
+    }
+
     db.query(
       `
       SELECT *

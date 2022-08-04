@@ -41,7 +41,7 @@ module.exports = (db) => {
   });
   router.post("/:id", (req, res) => {
     if (!req.session.user_id) {
-      return res.send("only logged in users may create a comment");
+      return res.status(400).send("only logged in users may create a comment");
     }
     db.query(
       `

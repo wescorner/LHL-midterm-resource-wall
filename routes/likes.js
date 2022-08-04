@@ -11,7 +11,7 @@ const router = express.Router();
 module.exports = (db) => {
   router.post("/:id", (req, res) => {
     if (!req.session.user_id) {
-      return res.send("only logged in users may like a resource");
+      return res.status(400).send("only logged in users may like a resource");
     }
     db.query(
       `
@@ -32,7 +32,7 @@ module.exports = (db) => {
   });
   router.delete("/:id", (req, res) => {
     if (!req.session.user_id) {
-      return res.send("only logged in users may remove a like");
+      return res.status(400).send("only logged in users may remove a like");
     }
     db.query(
       `

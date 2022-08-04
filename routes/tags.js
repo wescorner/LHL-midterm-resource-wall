@@ -7,8 +7,12 @@
 const express = require("express");
 const router = express.Router();
 
+//Add Tag
 module.exports = (db) => {
   router.post("/:id", (req, res) => {
+    if (!req.session.user_id) {
+      return res.status(400).send("only logged in users may add a tag");
+    }
     db.query(
       `
       INSERT INTO tags (tag, user_id, resource_id)
@@ -26,6 +30,8 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Remove Tag
   router.delete("/:id", (req, res) => {
     db.query(
       `

@@ -27,6 +27,9 @@ module.exports = (db) => {
       });
   });
   router.post("/:id", (req, res) => {
+    if (req.session.user_id != req.params.id) {
+      return res.status(400).send("CANNOT UPDATE THAT PROFILE");
+    }
     queryParams = [req.session.user_id];
     queryString = `
       UPDATE users
