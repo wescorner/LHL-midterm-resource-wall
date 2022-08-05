@@ -45,7 +45,7 @@
           <header>
             <a href="<%=owned.urls[i]%>"><%=owned.urls[i]%></a>
             <form class="delete-button" action="/api/resources/<%=owned.ids[i]%>?_method=DELETE" method="POST">
-              <button class="btn btn-danger" type="submit">Delete Resource</button>
+              <button class="btn btn-outline-danger" type="submit">Delete Resource</button>
             </form>
           </header>
 
@@ -68,6 +68,10 @@
             <div class='comment-dropdown'>
               <label>Comments </label>
               <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="resource-rating">
+              <label class="rating-label">5/5</label>
+              <i class="fa-solid fa-star"></i>
             </div>
             <div value="<%=owned.ratings[i]%>" class="stars solid-stars">
               <!--SHOW APPROPRIATE STAR RATINGS ON LOAD-->
@@ -133,6 +137,10 @@
           <div class='comment-dropdown'>
             <label>Comments </label>
             <i class="fa-solid fa-angle-down"></i>
+          </div>
+          <div class="resource-rating">
+            <label class="rating-label">5/5</label>
+            <i class="fa-solid fa-star"></i>
           </div>
           <div value="<%=liked.ratings[i]%>" class="stars solid-stars">
             <!--SHOW APPROPRIATE STAR RATINGS ON LOAD-->

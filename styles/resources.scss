@@ -21,6 +21,10 @@
     margin-left: -1rem;
     margin-right: -1rem;
 
+    button {
+      margin-right: 1rem;
+    }
+
     a {
       margin-left: 1rem;
       color: rgb(144, 156, 224);
@@ -71,6 +75,18 @@
     display:flex;
     justify-content: space-between;
     position: relative;
+
+    .comment-dropdown {
+      i {
+        color: rgb(144, 156, 224);
+      }
+    }
+
+    .resource-rating {
+      i.fa-solid {
+        color: gold;
+      }
+    }
 
     .comment-dropdown {
       i:hover {

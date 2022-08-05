@@ -148,4 +148,21 @@ $(document).ready(function() {
       });
     }
   });
+
+    //LOAD RATINGS
+    const loadRatings = function () {
+      $('.rating-label').each(function () {
+        const resource_id = $(this).parent().parent().parent().siblings().attr('id');
+        const $label = $(this);
+        $.ajax(`http://localhost:8080/api/ratings/average/${resource_id}`)
+          .then(function(response) {
+            if(response >=1 && response <= 5) {
+              $label.text(`${response}/5`)
+            } else {
+              $label.text('unrated');
+            }
+          });
+      })
+    }
+    loadRatings();
 });
