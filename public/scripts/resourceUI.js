@@ -45,7 +45,7 @@ $(document).ready(function() {
         $solidStarContainer.attr('value', 5);
       }
 
-      resource_id = $regularStarContainer.parent().parent().siblings().attr('id');
+      const resource_id = $regularStarContainer.parent().parent().siblings().attr('id');
       $.ajax(`http://localhost:8080/api/ratings/${resource_id}`, {type: 'DELETE', rating: rating})
       .then(function() {
         $.post(`http://localhost:8080/api/ratings/${resource_id}`, {rating: rating})
@@ -107,7 +107,7 @@ $(document).ready(function() {
   });
   //Perform AJAX POST to api/likes/id
   const likeResource = function ($resource) {
-    $resource_id = $resource.parent().parent().siblings()
+    const $resource_id = $resource.parent().parent().siblings()
 
     $.post(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`)
       .then(function() {
@@ -115,7 +115,7 @@ $(document).ready(function() {
   }
   //Perform AJAX DELETE to api/likes/id
   const unlikeResource = function ($resource) {
-    $resource_id = $resource.parent().parent().siblings()
+    const $resource_id = $resource.parent().parent().siblings()
 
     $.ajax(`http://localhost:8080/api/likes/${$resource_id.attr('id')}`, {type: 'DELETE'})
       .then(function() {
@@ -134,16 +134,22 @@ $(document).ready(function() {
   //ADD TAG BUTTON (form)
   $('#add-tag-button').on('click', function () {
     const tag = $(this).parent().prev().val();
-    $.post(`http://localhost:8080/api/tags/${$currentResource.attr('id')}`, {tag: tag})
-    .then(function(user) {
-      $('.overlay').css('visibility', 'hidden');
-      $('.add-tag-wrapper').css('display','none');
+    const $tagInput = $(this).parent().prev();
+    if (!tag) {
+      alert('Tags cannot be empty!');
+    } else {
+      $.post(`http://localhost:8080/api/tags/${$currentResource.attr('id')}`, {tag: tag})
+      .then(function(user) {
+        $('.overlay').css('visibility', 'hidden');
+        $('.add-tag-wrapper').css('display','none');
 
-      $tagTarget = $currentResource.parent().find('.add-tag');
+        const $tagTarget = $currentResource.parent().find('.add-tag');
 
-      $(`<span style="margin-left:0.1rem; background-color:rgb(80, 87, 129); margin-right: 0.2rem;" class="badge">${tag}</span>`)
-      .insertBefore($tagTarget);
+        $(`<span style="margin-left:0.1rem; background-color:rgb(80, 87, 129); margin-right: 0.2rem;" class="badge">${tag}</span>`)
+        .insertBefore($tagTarget);
+        $tagInput.val('');
     });
+    }
   });
 
 
@@ -193,7 +199,7 @@ $(document).ready(function() {
   //AJAX GET request to api/comments/id
   const startNewCommentButton = function () {
     $('.new-comment-button').on('click',function () {
-      $resource = $(this).parent().parent();
+      const $resource = $(this).parent().parent();
       const data = $(this).siblings().val();
       if (!data) {
         alert("Comments can't be empty!")
