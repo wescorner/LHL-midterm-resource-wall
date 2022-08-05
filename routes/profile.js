@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Get Profile
   router.get("/:id", (req, res) => {
     db.query(
       `
@@ -19,13 +20,14 @@ module.exports = (db) => {
     )
       .then((data) => {
         const profile = data.rows[0];
-        console.log(profile);
         res.render("profile");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Update Profile
   router.post("/:id", (req, res) => {
     queryParams = [req.session.user_id];
     queryString = `
@@ -55,7 +57,6 @@ module.exports = (db) => {
     db.query(queryString, queryParams)
       .then((data) => {
         const profile = data.rows[0];
-        console.log(profile);
         const templateVars = {
           user: profile.id,
           name: profile.name,

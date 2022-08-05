@@ -9,6 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Logout
   router.post("/", (req, res) => {
     if (!req.session.user_id) {
       return res.send("not currently logged in");

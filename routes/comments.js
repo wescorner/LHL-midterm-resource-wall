@@ -9,6 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Get Resource's Comments
   router.get("/:id", (req, res) => {
     db.query(
       `
@@ -21,7 +22,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const comments = data.rows;
-        console.log(comments);
         const templateVars = {
           ids: [],
           comments: [],
@@ -32,13 +32,14 @@ module.exports = (db) => {
           templateVars.comments.push(i.comment);
           templateVars.user_names.push(i.name);
         });
-        console.log(templateVars);
         res.send(templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Add Comment
   router.post("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may create a comment");
@@ -53,13 +54,14 @@ module.exports = (db) => {
     )
       .then((data) => {
         const comments = data.rows;
-        console.log(comments);
         res.send(comments[0]);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Delete Comment
   router.delete("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may delete a comment");

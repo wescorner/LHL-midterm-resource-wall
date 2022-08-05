@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Get User Profile
   router.get("/:profile", (req, res) => {
     db.query(
       `
@@ -21,7 +22,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const users = data.rows[0];
-        console.log(users);
         templateVars = {
           user: users.id,
           name: users.name,
@@ -34,6 +34,8 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Register New User
   router.post("/", (req, res) => {
     db.query(
       `
@@ -45,7 +47,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const users = data.rows[0];
-        console.log(users);
         req.session.user_id = users.id;
         res.send("added user!");
       })

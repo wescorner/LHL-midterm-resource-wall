@@ -8,6 +8,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Add Tag
   router.post("/:id", (req, res) => {
     db.query(
       `
@@ -19,13 +20,14 @@ module.exports = (db) => {
     )
       .then((data) => {
         const tags = data.rows;
-        console.log(tags);
         res.send("added tag!");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //Remove Tag
   router.delete("/:id", (req, res) => {
     db.query(
       `
@@ -37,7 +39,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const tags = data.rows;
-        console.log(tags);
         res.send("removed tag!");
       })
       .catch((err) => {

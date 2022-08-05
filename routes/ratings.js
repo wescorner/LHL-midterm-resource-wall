@@ -24,7 +24,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const ratings = data.rows;
-        console.log(ratings);
         res.send(`rated ${req.body.rating} stars!`);
       })
       .catch((err) => {
@@ -47,7 +46,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const ratings = data.rows;
-        console.log(ratings);
         res.send(`deleted rating!`);
       })
       .catch((err) => {

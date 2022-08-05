@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Login
   router.post("/", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -26,7 +27,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const user = data.rows[0];
-        console.log(user);
         if (!user) {
           res.send("user does not exist");
         }
@@ -38,7 +38,6 @@ module.exports = (db) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         res.send(err);
       });
   });

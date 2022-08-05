@@ -23,7 +23,7 @@ module.exports = (db) => {
     `;
     if (input) {
       queryParams.push(`%${input}%`);
-      queryString += `HAVING tag LIKE $2`;
+      queryString += `HAVING tag LIKE $2 OR title LIKE $2`;
     }
     queryString += `ORDER BY resources.id;`;
     db.query(queryString, queryParams)
@@ -49,7 +49,6 @@ module.exports = (db) => {
           templateVars.urls.push(i.url);
           templateVars.ratings.push(i.rating);
         });
-        console.log(templateVars);
         res.render("index", templateVars);
       })
       .catch((err) => {
@@ -72,7 +71,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        console.log(resources);
         res.send("added resource!");
       })
       .catch((err) => {
@@ -99,7 +97,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        // console.log(resources);
         const templateVars = {
           owned: {
             ids: [],
@@ -156,8 +153,6 @@ module.exports = (db) => {
             }
           );
         }
-        console.log(templateVars);
-        console.log(templateVars.liked.tags);
         res.render("myresources", templateVars);
       })
       .catch((err) => {
@@ -180,7 +175,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const resources = data.rows;
-        console.log(resources);
         res.redirect("back");
       })
       .catch((err) => {

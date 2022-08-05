@@ -9,6 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Add Like
   router.post("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may like a resource");
@@ -23,13 +24,13 @@ module.exports = (db) => {
     )
       .then((data) => {
         const likes = data.rows;
-        console.log(likes);
         res.send("added like!");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
+  //Remove Like
   router.delete("/:id", (req, res) => {
     if (!req.session.user_id) {
       return res.send("only logged in users may remove a like");
@@ -44,7 +45,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         const likes = data.rows;
-        console.log(likes);
         if (likes.length === 0) {
           return res.send("you haven't liked this post");
         }
