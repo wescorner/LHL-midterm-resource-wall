@@ -239,7 +239,6 @@ $(document).ready(function() {
       const $label = $(this);
       $.ajax(`http://localhost:8080/api/ratings/average/${resource_id}`)
         .then(function(response) {
-          console.log(response);
           if(response >=1 && response <= 5) {
             $label.text(`${response}/5`)
           } else {
